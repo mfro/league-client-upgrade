@@ -1,0 +1,13 @@
+<!--<style src="style.less" />-->
+
+<lol-uikit-tooltip>
+    <lol-uikit-content-block type="tooltip-small">
+        <h6>{{ name }}</h6>
+        <template v-if="rankings.length == 0">
+            <p>Unranked - Level {{ level }}</p>
+        </template>
+        <template v-else v-for="ranking in rankings">
+            <p>{{ ranking.type}}: {{ranking.tier }} {{ ranking.rank }}</p>
+        </template>
+    </lol-uikit-content-block>
+</lol-uikit-tooltip>

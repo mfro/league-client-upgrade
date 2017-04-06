@@ -1,0 +1,7 @@
+<style src="./style.less" />
+
+<div class="game-member" v-if="summoner">
+    <lol-uikit-framed-icon class="icon-frame" inset-shadow>
+        <img :src="`/lol-game-data/assets/v1/profile-icons/${summoner.profileIconId}.jpg`" />
+    </lol-uikit-framed-icon>
+</div>

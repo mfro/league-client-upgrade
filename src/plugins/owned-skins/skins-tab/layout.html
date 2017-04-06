@@ -1,0 +1,72 @@
+<style src="./style.less" />
+
+<component src="../skin" />
+
+<div class="skins-component">
+    <div class="loading-spinner" :class="{ 'loading-fade-out': champions }" />
+
+    <div class="skins-root" :class="{ 'loading-fade-in': champions }">
+        <div class="left-pane">
+            <div class="count">
+                <!-- Skin count out of total. -->
+                <span class="number owned">{{ ownedCount }}</span>
+                <span class="of">of</span>
+                <span class="number total">{{ totalCount }}</span>
+                <span class="skin-text">SKINS</span>
+            </div>
+
+            <!-- Show unowned checkbox. Uses the builtin uikit component. -->
+            <lol-uikit-flat-checkbox class="show-unowned" @checkboxToggle="showUnowned = !showUnowned">
+                <input type="checkbox" :checked="showUnowned">
+                <label>Show Unowned</label>
+            </lol-uikit-flat-checkbox>
+
+            <!-- Group by champion checkbox. Uses the builtin uikit component. -->
+            <lol-uikit-flat-checkbox class="group-checkbox" @checkboxToggle="group = !group">
+                <input type="checkbox" :checked="group">
+                <label>Group by Champion</label>
+            </lol-uikit-flat-checkbox>
+
+            <!-- The various sorting options. Again, we make use of the builtin uikit components. -->
+            <lol-uikit-radio-input class="sort-order">
+                <lol-uikit-radio-input-option :selected="sort == 'alphabet'" @click="sort = 'alphabet'">
+                    ALPHABETICAL
+                </lol-uikit-radio-input-option>
+                
+                <lol-uikit-radio-input-option :selected="sort == 'mastery'" @click="sort = 'mastery'">
+                    MASTERY
+                </lol-uikit-radio-input-option>
+                
+                <lol-uikit-radio-input-option :selected="sort == 'count'" @click="sort = 'count'">
+                    COUNT
+                </lol-uikit-radio-input-option> 
+            </lol-uikit-radio-input>
+        </div>
+
+        <!-- By wrapping our view in lol-uikit-scrollable, we automatically get LCU-style scrollbars. -->
+        <lol-uikit-scrollable class="right-pane" :class="{ group }">
+            <template v-if="group">
+                <!-- For every champion... -->
+                <div class="champion-category" v-for="champion in sorted" :key="champion.id" v-if="champion.skins.filter(s => s.ownership.owned).length != 1 || showUnowned">
+                    <!-- ... we have a name ... -->
+                    <div class="title">
+                        <span>{{ champion.name }}</span>
+                        <span>{{ champion.skins.filter(s => s.ownership.owned).length - 1 }}/{{ champion.skins.length - 1 }}</span>
+                    </div>
+
+                    <hr>
+                    <div class="champion-skins">
+                        <skin v-for="skin in champion.skins.slice(1)" :key="skin.id" :champion="champion" :skin="skin" :uikit="uikit" :championDetails="championDetails"
+                            :showUnowned="showUnowned" />
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <template v-for="champion in sorted">
+                    <skin v-for="skin in champion.skins.slice(1)" :key="skin.id" :champion="champion" :skin="skin" :uikit="uikit" :championDetails="championDetails"
+                        :showUnowned="showUnowned" />
+                </template>
+            </template>
+        </lol-uikit-scrollable>
+    </div>
+</div>

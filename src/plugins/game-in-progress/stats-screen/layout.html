@@ -1,0 +1,11 @@
+<style src="./style.less"/>
+
+<div class="stats-screen">
+    <div class="blue-team" v-if="blueTeam">
+        <game-member v-for="member in blueTeam" :observe="observe" :member="member"/>
+    </div>
+
+    <div class="red-team">
+        <game-member v-for="member in redTeam" :observe="observe" :member="member"/>
+    </div>
+</div>
