@@ -11,7 +11,7 @@ export default <PluginDeclaration<{}>>{
 
     riotDependencies: {
         'rcp-fe-lol-champ-select': '1.0.788',
-        'rcp-fe-lol-leagues': '0.0.326',
+        'rcp-fe-lol-leagues': '0.0.331',
         'rcp-fe-lol-uikit': '0.x',
 
         'rcp-be-lol-summoner': '1.x',
