@@ -12,7 +12,7 @@ import BooleanSetting from './boolean';
 let rcpSettings: any;
 let l10n: L10nInjector;
 
-const default_category = 'zhonya-general';
+const default_category = 'lol-general';
 // const settings_namespace = 'zhonya-settings';
 
 const init_backlog = new Backlog();
@@ -27,7 +27,7 @@ export function addBoolean(one: string, two: string, three: string | boolean, fo
         key = one;
         label = two;
         fallback = <boolean>three;
-        category = 'lol-general';
+        category = default_category;
     } else {
         category = one;
         key = two;
@@ -38,46 +38,46 @@ export function addBoolean(one: string, two: string, three: string | boolean, fo
     return new BooleanSetting(key, label, rcpSettings, category);
 }
 
-export function addCategory(name: string, label: string, after?: string) {
-    if (init_backlog.put(addCategory, arguments)) return;
+// export function addCategory(name: string, label: string, after?: string) {
+//     if (init_backlog.put(addCategory, arguments)) return;
+    
+//     // Create a localization key for the property label and inject it
+//     let titleKey = 'zhonya_settings_' + name;
+//     l10n.add(titleKey, label);
 
-    // Create a localization key for the property label and inject it
-    let titleKey = 'zhonya_settings_' + name;
-    l10n.add(titleKey, label);
+//     // Get the category manager from the rcp-fe-settings api
+//     let categoryManager = rcpSettings._settingsManager._settingsCategoryManager;
 
-    // Get the category manager from the rcp-fe-settings api
-    let categoryManager = rcpSettings._settingsManager._settingsCategoryManager;
+//     // Get the 'GENERAL' category which is always present
+//     let general = categoryManager.categories.find((c: any) => c.name == 'lol-general');
 
-    // Get the 'GENERAL' category which is always present
-    let general = categoryManager.categories.find((c: any) => c.name == 'lol-general');
+//     // Use it's prototype to create our own category
+//     let proto = Object.getPrototypeOf(general);
+//     let category = new proto.constructor({
+//         name: name,
+//         titleKey: titleKey,
 
-    // Use it's prototype to create our own category
-    let proto = Object.getPrototypeOf(general);
-    let category = new proto.constructor({
-        name: name,
-        titleKey: titleKey,
+//         components: [],
+//         group: general.group,
 
-        components: [],
-        group: general.group,
+//         canReset: false,
+//         requireLogin: false,
+//     });
 
-        canReset: false,
-        requireLogin: false,
-    });
-
-    // Add it to both the category manager and the 'CLIENT' category group
-    categoryManager.categories.push(category);
-    if (after == null) {
-        general.group.categories.push(category)
-    } else {
-        let index = general.group.categories.findIndex((c: any) => c.name == after);
-        general.group.categories.splice(index + 1, 0, category);
-    }
-}
+//     // Add it to both the category manager and the 'CLIENT' category group
+//     categoryManager.categories.push(category);
+//     if (after == null) {
+//         general.group.categories.push(category)
+//     } else {
+//         let index = general.group.categories.findIndex((c: any) => c.name == after);
+//         general.group.categories.splice(index + 1, 0, category);
+//     }
+// }
 
 export function setup(hook: Provider) {
     l10n = hook.getPlugin<L10nInjector>('l10n-injector').api;
 
-    addCategory(default_category, 'EXTRA SETTINGS', 'lol-general');
+    // addCategory(default_category, 'EXTRA SETTINGS', 'lol-general');
 
     hook.postInit('rcp-fe-settings', plugin => {
         rcpSettings = plugin.api;

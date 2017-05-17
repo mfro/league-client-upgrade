@@ -18,9 +18,9 @@ let uikit: any;
 function addTooltip(this: ChampSelectComponent, member: ChampSelect.Member, Ember: Ember) {
     let summoner: Summoner.Summoner;
     let leagues: any[];
-    request<Summoner.Summoner>(`/lol-summoner/v1/summoners?name=${member.displayName}`).then<any[]>(data => {
+    request<Summoner.Summoner>(`/lol-summoner/v2/summoners?name=${member.displayName}`).then<any[]>(data => {
         summoner = data;
-        return request(`/lol-leagues/v1/summoner-leagues/${summoner.summonerId}`);
+        return request(`/lol-leagues/v2/summoner-leagues/${summoner.summonerId}`);
     }).then(data => {
         leagues = data;
         return <any>trans;
