@@ -1,6 +1,7 @@
 import { Provider } from 'base/plugin';
 // import * as Logging from 'base/logging';
 
+import * as style from './style.less';
 import Ember from 'rcp-fe-ember-libs/v1';
 import { API as EmberInjector } from 'base/plugins/ember-injector';
 
@@ -12,10 +13,10 @@ function Mixin(Ember: Ember) {
             Ember.run.scheduleOnce('afterRender', this, () => {
                 let div = document.createElement('div');
                 div.innerText = 'Modifications applied';
-                div.style.paddingTop = '8px';
+                div.className = 'mfro-version-info';
 
-                let target = this.$('.login-body-lower-section')[0];
-                target.appendChild(div);
+                let target = this.$('.login-body-lower-section .login-external-links')[0];
+                target.insertBefore(div, target.firstChild);
             });
         }
     }
@@ -27,4 +28,6 @@ export function setup(hook: Provider) {
     hook.preInit('rcp-fe-lol-login', () => {
         ember.api.hook('login-component', Mixin);
     });
+
+    style();
 }
