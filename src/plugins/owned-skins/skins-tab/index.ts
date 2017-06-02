@@ -46,7 +46,17 @@ export default Template<Data>({
         sorted() {
             if (!this.champions) return null;
 
-            return this.champions.sort((a, b) => {
+            let list = this.champions.filter(champ => {
+                if (champ.id < 0)
+                    return false;
+                
+                if (!this.showUnowned && champ.skins.filter(s => s.ownership.owned).length == 1)
+                    return false;
+
+                return true;
+            });
+
+            return list.sort((a, b) => {
                 switch (this.sort) {
                     default: return 0;
                     case 'alphabet': return alphabet(a, b);

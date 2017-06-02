@@ -14,7 +14,7 @@ export default <PluginDeclaration<API>>{
     description: 'Utility plugin for modifying ember components on the league client',
 
     riotDependencies: {
-        'rcp-fe-ember-libs': '0.0.66',
+        'rcp-fe-ember-libs': '0.0.68',
     },
 
     api: api

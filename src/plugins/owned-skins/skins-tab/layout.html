@@ -46,9 +46,7 @@
         <!-- By wrapping our view in lol-uikit-scrollable, we automatically get LCU-style scrollbars. -->
         <lol-uikit-scrollable class="right-pane" :class="{ group }">
             <template v-if="group">
-                <!-- For every champion... -->
-                <div class="champion-category" v-for="champion in sorted" :key="champion.id" v-if="champion.skins.filter(s => s.ownership.owned).length != 1 || showUnowned">
-                    <!-- ... we have a name ... -->
+                <div class="champion-category" v-for="champion in sorted" :key="champion.id">
                     <div class="title">
                         <span>{{ champion.name }}</span>
                         <span>{{ champion.skins.filter(s => s.ownership.owned).length - 1 }}/{{ champion.skins.length - 1 }}</span>
