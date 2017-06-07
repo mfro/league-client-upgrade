@@ -10,6 +10,5 @@ export default <PluginDeclaration<API>>{
     version: '1.0.0',
     description: 'Opens and displays the dev tools',
 
-    disabled: true,
     api: api
 };

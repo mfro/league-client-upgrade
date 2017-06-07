@@ -5,7 +5,7 @@ import * as method from './util/method';
 
 import allPlugins from './plugins';
 
-Logging.log('injected', location.href);
+Logging.log(`injected into ${location.href} (${location.hostname})`);
 
 if (location.hostname == '127.0.0.1') {
     allPlugins.forEach(Zhonya.install);

@@ -2,13 +2,7 @@ import { Provider } from 'base/plugin';
 import request from 'base/util/request';
 import * as Logging from 'base/logging';
 
-// import * as style from './style.less';
-
-// if (location.host == 'localhost:8888') {
-//     style();
-// }
-
-function create() {
+if (location.search == '?mfro-devtool-inject') {
     request<any[]>('http://localhost:8888/json').then(list => {
         list = list.filter(a => a.url != 'about:blank');
 
@@ -18,39 +12,67 @@ function create() {
         }
 
         let page = list[0];
-        window.open('http://localhost:8888' + page.devToolsFrontendUrl);        
+        window.top.postMessage({
+            type: 'mfro-devtools-json',
+            page: page
+        }, '*');;
     });
-    // let win = window.open('about:blank', 'popoutChatWindow', 'left=100,top=100,width=100,height=100');
+}
 
-    // win.riotInvoke({
-    //     request: JSON.stringify({
-    //         name: "Window.ResizeTo",
-    //         params: [1280, 1040]
-    //     })
-    // });
+let frame: HTMLIFrameElement | null = null;
+let devtoolsUrl: any = null;
 
-    // win.riotInvoke({
-    //     request: JSON.stringify({
-    //         name: "Window.CenterToScreen",
-    //         params: []
-    //     })
-    // });
+function create() {
+    if (devtoolsUrl != null)
+        return open();
 
-    // win.riotInvoke({
-    //     request: JSON.stringify({
-    //         name: "Window.Show",
-    //         params: []
-    //     })
-    // });
+    if (frame != null)
+        return;
 
-    // win.location.href = 'http://localhost:8888/';
-    // Logging.log('devtools', win);
+    frame = document.createElement('iframe');
+    frame.src = 'http://localhost:8888/?mfro-devtool-inject';
+    frame.style.display = 'none';
+    document.body.appendChild(frame);
+}
+
+function open() {
+    let win = window.open('about:blank', 'popoutChatWindow', 'left=100,top=100,width=100,height=100');
+
+    win.riotInvoke({
+        request: JSON.stringify({
+            name: "Window.ResizeTo",
+            params: [1280, 1040]
+        })
+    });
+
+    win.riotInvoke({
+        request: JSON.stringify({
+            name: "Window.CenterToScreen",
+            params: []
+        })
+    });
+
+    win.riotInvoke({
+        request: JSON.stringify({
+            name: "Window.Show",
+            params: []
+        })
+    });
+
+    win.location.href = devtoolsUrl;
 }
 
 export function setup(hook: Provider) {
-    window.addEventListener('keydown', e => {
-        console.log(e.keyCode);
+    window.addEventListener('message', e => {
+        if (e.data.type == 'mfro-devtools-json') {
+            devtoolsUrl = 'http://localhost:8888' + e.data.page.devtoolsFrontendUrl;
 
+            open();
+            return;
+        }
+    });
+
+    window.addEventListener('keydown', e => {
         if (e.keyCode == 123) create();
     });
 }

@@ -15,7 +15,7 @@ export default function request<T>(one: string, two?: string, body?: any): Promi
         req.addEventListener('load', e => {
             let res = req.responseText;
 
-            if (req.getResponseHeader('content-type') == 'application/json')
+            if (req.getResponseHeader('content-type')!.indexOf('application/json') != -1)
                 res = JSON.parse(res);
 
             if (req.status == 200)
