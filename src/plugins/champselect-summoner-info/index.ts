@@ -10,8 +10,8 @@ export default <PluginDeclaration<{}>>{
     description: 'Displays summoner ranked stats and other info for team mates in champ select',
 
     riotDependencies: {
-        'rcp-fe-lol-champ-select': '1.0.873',
-        'rcp-fe-lol-leagues': '0.0.337',
+        'rcp-fe-lol-champ-select': '1.0.906',
+        'rcp-fe-lol-leagues': '0.0.341',
         'rcp-fe-lol-uikit': '0.x',
 
         'rcp-be-lol-summoner': '2.x',

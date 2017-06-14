@@ -8,7 +8,7 @@ export default <PluginDeclaration<{}>>{
     description: 'Adds zhonya version to the login page',
 
     riotDependencies: {
-        'rcp-fe-lol-login': '0.0.410'
+        'rcp-fe-lol-login': '0.0.416'
     },
 
     dependencies: {
