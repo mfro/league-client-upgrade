@@ -1,5 +1,5 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
-// import * as Logging from 'base/logging';
+import * as Logging from 'base/logging';
 
 import * as method from 'base/util/method';
 import request from 'base/util/request';
@@ -98,12 +98,14 @@ function loadPlugin(plugin: PendingPlugin) {
 }
 
 function hook(args: HookArgs) {
+    Logging.log('hook', args.name);
+
     // 1: Replace the dispatchEvent method on the plugin's document
     method.replace(args.document, 'dispatchEvent', (original, event: AnnounceEvent) => {
         if (event.type != 'riotPlugin.announce')
             return original(event);
 
-        let oldWithAffinity = event.registrationHandler.withAffinity!
+        let oldWithAffinity = event.registrationHandler.withAffinity!;
 
         event.registrationHandler = init => {
             event.registrationHandler.withAffinity!({

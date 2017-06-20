@@ -1,4 +1,4 @@
-import * as Zhonya from './zhonya';
+import * as Zhonya from './main';
 import * as Logging from './logging';
 
 import * as method from './util/method';

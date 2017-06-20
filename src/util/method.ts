@@ -36,7 +36,7 @@ export function replace<T, M extends keyof T>(target: T, method: M, replacement:
  * @param {Function} first the new method
  */
 export function before<T, M extends keyof T>(target: T, method: M, first: (...args: any[]) => void) {
-    replace(target, method, (original, ...args) => {
+    replace(target, method, function (original, ...args) {
         first(...args);
         return original(...args);
     });
@@ -51,7 +51,7 @@ export function before<T, M extends keyof T>(target: T, method: M, first: (...ar
  * @param {Function} first the new method
  */
 export function after<T, M extends keyof T>(target: T, method: M, then: (ret: any, ...args: any[]) => void) {
-    replace(target, method, (original, ...args) => {
+    replace(target, method, function (original, ...args) {
         let ret = original(...args);
         then(ret, ...args);
         return ret;

@@ -18,9 +18,11 @@
             ]
         }
     },
+    
     "exclude": [
         "node_modules"
     ],
+
     "include": [
         "./declare/**/*.d.ts",
         "./src/**/*.ts"

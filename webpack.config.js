@@ -7,6 +7,7 @@ module.exports = {
         path: path.resolve('build'),
         filename: 'bundle.js',
     },
+    
     module: {
         rules: [
             {
@@ -26,7 +27,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'my-vue-loader'
+                loader: '@mfro/vue-loader'
             },
             {
                 test: /\.less$/,
@@ -41,12 +42,14 @@ module.exports = {
             },
         ]
     },
+
     resolve: {
         extensions: ['.js', '.ts'],
         alias: {
             base: path.resolve('src')
         }
     },
+
     performance: {
         hints: false
     },

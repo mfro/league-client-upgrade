@@ -3,9 +3,11 @@ import Settings from './settings';
 import VersionInfo from './version-info';
 import L10nInjector from './l10n-injector';
 import EmberInjector from './ember-injector';
+import ComponentsInjector from './components-injector';
 
 import DevTools from './dev-tools';
 
+import OpGgEmbed from './op.gg-embed';
 import Crapcept from './crapcept';
 import OwnedSkins from './owned-skins';
 import GameInProgress from './game-in-progress';
@@ -18,9 +20,11 @@ export default [
     VersionInfo,
     L10nInjector,
     EmberInjector,
+    ComponentsInjector,
 
     DevTools,
 
+    OpGgEmbed,
     Crapcept,
     OwnedSkins,
     GameInProgress,
