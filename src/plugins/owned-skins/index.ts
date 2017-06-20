@@ -1,13 +1,9 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export interface API {
-}
-
-export default <PluginDeclaration<{}>>{
+export default Zhonya.addPlugin({
     name: 'owned-skins',
-    version: '1.0.0',
     description: 'Adds a tab to the collection page that displays all of your owned skins',
 
     riotDependencies: {
@@ -18,9 +14,9 @@ export default <PluginDeclaration<{}>>{
         'rcp-fe-lol-champion-details': '0.x',
     },
 
-    dependencies: {
-        'l10n-injector': '1.x',
-    },
+    dependencies: [
+        'l10n-injector',
+    ],
 
     api: api
-};
+});

@@ -1,4 +1,4 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
@@ -6,9 +6,8 @@ export interface API {
     hook(name: string, callback: (type: any) => any): void;
 }
 
-export default <PluginDeclaration<API>>{
+export default Zhonya.addPlugin({
     name: 'components-injector',
-    version: '1.0.0',
     description: 'Utility plugin for modifying web components on the league client',
 
     riotDependencies: {
@@ -16,4 +15,4 @@ export default <PluginDeclaration<API>>{
     },
 
     api: api
-};
+});

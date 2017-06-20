@@ -1,9 +1,11 @@
 import { Provider } from 'base/plugin';
 // import * as Logging from 'base/logging';
 
-import * as style from './style.less';
 import Ember from 'rcp-fe-ember-libs/v1';
-import { API as EmberInjector } from 'base/plugins/ember-injector';
+
+import emberInjector from 'base/plugins/ember-injector';
+
+import * as style from './style.less';
 
 function Mixin(Ember: Ember) {
     return {
@@ -23,10 +25,8 @@ function Mixin(Ember: Ember) {
 }
 
 export function setup(hook: Provider) {
-    let ember = hook.getPlugin<EmberInjector>('ember-injector');
-
     hook.preInit('rcp-fe-lol-login', () => {
-        ember.api.hook('login-component', Mixin);
+        emberInjector.api.hook('login-component', Mixin);
     });
 
     style();

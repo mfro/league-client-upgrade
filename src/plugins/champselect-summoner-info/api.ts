@@ -7,7 +7,8 @@ import Ember from 'rcp-fe-ember-libs/v1';
 import * as Summoner from 'rcp-be-lol-summoner/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
-import { API as EmberInjector } from 'base/plugins/ember-injector';
+
+import emberInjector from 'base/plugins/ember-injector';
 
 import Tooltip from './tooltip';
 import Vue from 'vue';
@@ -83,10 +84,8 @@ function mixin(Ember: Ember) {
 export function setup(hook: Provider) {
     trans = request('/fe/lol-leagues/trans.json');
 
-    let ember = hook.getPlugin<EmberInjector>('ember-injector');
-
     hook.preInit('rcp-fe-lol-champ-select', () => {
-        ember.api.hook('champion-select', mixin);
+        emberInjector.api.hook('champion-select', mixin);
     });
 
     hook.postInit('rcp-fe-lol-uikit', plugin => uikit = plugin.api);

@@ -1,13 +1,9 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export interface API {
-}
-
-export default <PluginDeclaration<API>>{
+export default Zhonya.addPlugin({
     name: 'game-in-progress',
-    version: '1.0.0',
     disabled: true,
     description: 'Display stats for all members of a game, replacing the default "Game is still in progress..." screen',
 
@@ -15,9 +11,9 @@ export default <PluginDeclaration<API>>{
         'rcp-fe-lol-game-in-progress': '0.0.53'
     },
 
-    dependencies: {
-        'observe': '1.x',
-    },
+    dependencies: [
+        'observe',
+    ],
 
     api: api
-}
+});

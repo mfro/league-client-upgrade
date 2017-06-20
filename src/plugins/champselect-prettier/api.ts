@@ -4,7 +4,8 @@ import * as Logging from 'base/logging';
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
-import { API as EmberInjector } from 'base/plugins/ember-injector';
+
+import emberInjector from 'base/plugins/ember-injector';
 
 import * as style from './style.less';
 
@@ -39,11 +40,9 @@ function mixin(Ember: Ember) {
 }
 
 export function setup(hook: Provider) {
-    let ember = hook.getPlugin<EmberInjector>('ember-injector');
-
     style();
     
     hook.preInit('rcp-fe-lol-champ-select', () => {
-        ember.api.hook('champion-select', mixin);
+        emberInjector.api.hook('champion-select', mixin);
     });
 }

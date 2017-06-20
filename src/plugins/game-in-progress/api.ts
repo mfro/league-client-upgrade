@@ -10,12 +10,7 @@ export function setup(hook: Provider) {
         Logging.log('game-in-progress', api);
     });
 
-    let observe = hook.getPlugin('observe');
-
-    let vue = new Vue({
-        mixins: [StatsScreen],
-        data() { return { observe: observe.api }; }
-    });
+    let vue = new Vue(StatsScreen);
     let div = document.createElement('div');
     document.body.appendChild(div);
     vue.$mount(div);

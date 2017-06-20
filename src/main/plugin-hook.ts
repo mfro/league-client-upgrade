@@ -14,17 +14,6 @@ interface RegistrationHandler {
     withAffinity?(obj: PluginAPI): void;
 }
 
-interface HookArgs {
-    /** The plugin fullName */
-    name: string;
-
-    /** Callback that tells plugin-runner that it is loaded */
-    load: () => void;
-
-    /** The host document for the plugin */
-    document: HTMLDocument;
-}
-
 interface AnnounceEvent extends Event {
     /** Callback to be called by the plugin to get the API provider */
     registrationHandler: RegistrationHandler;
@@ -97,16 +86,15 @@ function loadPlugin(plugin: PendingPlugin) {
     plugin.resolve(wrapped);
 }
 
-function hook(args: HookArgs) {
-    Logging.log('hook', args.name);
-
+function hook(name: string, document: HTMLDocument) {
     // 1: Replace the dispatchEvent method on the plugin's document
-    method.replace(args.document, 'dispatchEvent', (original, event: AnnounceEvent) => {
+    method.replace(document, 'dispatchEvent', (original, event: AnnounceEvent) => {
         if (event.type != 'riotPlugin.announce')
             return original(event);
 
         let oldWithAffinity = event.registrationHandler.withAffinity!;
 
+        // 2: Replace the registration handler and withAffinity methods
         event.registrationHandler = init => {
             event.registrationHandler.withAffinity!({
                 init,
@@ -117,22 +105,54 @@ function hook(args: HookArgs) {
 
         event.registrationHandler.withAffinity = api => {
             let plugin = {
-                name: args.name,
+                name: name,
                 api: api,
 
                 resolve: oldWithAffinity
             };
 
+            // 4: Either delay or load the plugin
             if (callbacks)
                 loadPlugin(plugin);
             else
                 pending.push(plugin);
         };
 
+        // 3: Call the original dispatchEvent method
         original(event);
     });
-
-    args.load();
 }
 
-(<any>window).$ZhonyaHook = hook;
+function hookImport(node: HTMLElement) {
+    if (!(node instanceof HTMLLinkElement))
+        return;
+
+    let name = node.getAttribute('data-plugin-name');
+    let load = node.onload as Function;
+
+    if (!name)
+        return;
+
+    let late = Boolean(node.import);
+
+    if (late)
+        Logging.error('too late to load', name);
+
+    node.onload = () => {
+        if (late)
+            Logging.error('jk not too late', name);
+
+        hook(name!, node.import!);
+        load();
+    };
+}
+
+// if (!location.search.includes('DEBUG=.*'))
+//     location.search = '?DEBUG=.*';
+
+method.before(document.head, 'appendChild', node => {
+    hookImport(node);
+});
+
+for (let child of Array.prototype.slice.call(document.head.children))
+    hookImport(child);

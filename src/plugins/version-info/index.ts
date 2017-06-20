@@ -1,19 +1,18 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export default <PluginDeclaration<{}>>{
+export default Zhonya.addPlugin({
     name: 'version-info',
-    version: '1.0.0',
     description: 'Adds zhonya version to the login page',
 
     riotDependencies: {
         'rcp-fe-lol-login': '0.0.416'
     },
 
-    dependencies: {
-        'ember-injector': '1.x'
-    },
+    dependencies: [
+        'ember-injector',
+    ],
 
     api: api
-};
+});

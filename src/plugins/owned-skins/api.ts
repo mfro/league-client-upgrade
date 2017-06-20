@@ -2,7 +2,8 @@ import { Provider } from 'base/plugin';
 // import * as Logging from 'base/logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
-import { API as L10nInjector } from 'base/plugins/l10n-injector';
+
+import l10nInjector from 'base/plugins/l10n-injector';
 
 import SkinsTab from './skins-tab';
 import Vue from 'vue';
@@ -27,8 +28,7 @@ function create(Ember: Ember, championDetails: any, uikit: any) {
 }
 
 export function setup(hook: Provider) {
-    let l10n = hook.getPlugin<L10nInjector>('l10n-injector');
-    l10n.api.add(l10n_key, 'SKINS');
+    l10nInjector.api.add(l10n_key, 'SKINS');
 
     hook.getRiotPluginApi('rcp-fe-ember-libs').then(api => {
         return api.getEmber('2.12.0');

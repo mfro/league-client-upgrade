@@ -1,16 +1,9 @@
-import { PluginDeclaration } from 'base/plugin';
-
-import Ember from 'rcp-fe-ember-libs/v1';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export interface API {
-    hook(classname: string, callback: (ember: Ember) => any): void;
-}
-
-export default <PluginDeclaration<API>>{
+export default Zhonya.addPlugin({
     name: 'ember-injector',
-    version: '1.0.0',
     description: 'Utility plugin for modifying ember components on the league client',
 
     riotDependencies: {
@@ -18,4 +11,4 @@ export default <PluginDeclaration<API>>{
     },
 
     api: api
-};
+});

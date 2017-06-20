@@ -1,10 +1,9 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export default <PluginDeclaration<{}>>{
+export default Zhonya.addPlugin({
     name: 'champselect-prettier',
-    version: '1.0.0',
     disabled: true,
     description: 'Tweaks champ select to look a bit better',
 
@@ -12,9 +11,9 @@ export default <PluginDeclaration<{}>>{
         'rcp-fe-lol-champ-select': '1.0.562',
     },
 
-    dependencies: {
-        'ember-injector': '1.x'
-    },
+    dependencies: [
+        'ember-injector',
+    ],
 
     api: api
-};
+});

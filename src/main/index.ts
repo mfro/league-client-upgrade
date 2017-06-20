@@ -1,4 +1,9 @@
-import { Plugin, PluginState, PluginDeclaration, RiotPlugin, RiotPluginCallback } from 'base/plugin';
+import {
+    Plugin, PluginState,
+    PluginDeclaration,
+    RiotPlugin, RiotPluginCallback
+} from 'base/plugin';
+
 import * as Logging from 'base/logging';
 
 import * as riot from './plugin-hook';
@@ -9,58 +14,62 @@ let postInits = new Map<string, RiotPluginCallback[]>();
 let plugins: Plugin<any>[] = [];
 let riotPlugins: RiotPlugin[] = [];
 
-riot.getMetaData().then(metadata => {
-    // Map the riot plugin definitions to actual plugins
-    for (let item of metadata) {
-        preInits.set(item.fullName, []);
-        postInits.set(item.fullName, []);
+let metadata = riot.getMetaData();
 
-        riotPlugins.push({
-            api: null,
-            provider: null,
-            isInitialized: false,
-            definition: item
-        });
-    }
+export function start() {
+    metadata.then(metadata => {
+        // Map the riot plugin definitions to actual plugins
+        for (let item of metadata) {
+            preInits.set(item.fullName, []);
+            postInits.set(item.fullName, []);
 
-    // Setup all the zhonya plugins
-    for (let plugin of plugins) {
-        plugin.setup({
-            allPlugins: () => plugins,
-            
-            getPlugin, getRiotPlugin,
-            preInit, postInit,
-            getRiotPluginApi
-        });
-    }
-
-    // Complete the riot plugin hooks
-    riot.load({
-        preInit(name) {
-            let plugin = riotPlugins.find(p => p.definition.fullName == name);
-            if (!plugin) return;
-
-            let pre = preInits.get(plugin.definition.fullName);
-            if (!pre) return;
-            for (let p of pre) p(plugin);
-        },
-
-        postInit(name, api, provider) {
-            let plugin = riotPlugins.find(p => p.definition.fullName == name);
-            if (!plugin) return;
-
-            plugin.api = api;
-            plugin.provider = provider;
-            plugin.isInitialized = true;
-
-            let post = postInits.get(plugin.definition.fullName);
-            if (!post) return;
-            for (let p of post) p(plugin);
+            riotPlugins.push({
+                api: null,
+                provider: null,
+                isInitialized: false,
+                definition: item
+            });
         }
-    });
-});
 
-export function install<T>(declaration: PluginDeclaration<T>) {
+        // Setup all the zhonya plugins
+        for (let plugin of plugins) {
+            plugin.setup({
+                allPlugins: () => plugins,
+
+                getPlugin, getRiotPlugin,
+                preInit, postInit,
+                getRiotPluginApi
+            });
+        }
+
+        // Complete the riot plugin hooks
+        riot.load({
+            preInit(name) {
+                let plugin = riotPlugins.find(p => p.definition.fullName == name);
+                if (!plugin) return;
+
+                let pre = preInits.get(plugin.definition.fullName);
+                if (!pre) return;
+                for (let p of pre) p(plugin);
+            },
+
+            postInit(name, api, provider) {
+                let plugin = riotPlugins.find(p => p.definition.fullName == name);
+                if (!plugin) return;
+
+                plugin.api = api;
+                plugin.provider = provider;
+                plugin.isInitialized = true;
+
+                let post = postInits.get(plugin.definition.fullName);
+                if (!post) return;
+                for (let p of post) p(plugin);
+            }
+        });
+    });
+}
+
+export function addPlugin<T>(declaration: PluginDeclaration<T>) {
     let plugin = new Plugin(declaration);
 
     if (declaration.disabled) {
@@ -69,6 +78,8 @@ export function install<T>(declaration: PluginDeclaration<T>) {
     }
 
     plugins.push(plugin);
+
+    return plugin;
 }
 
 export function getPlugin<T>(key: string) {

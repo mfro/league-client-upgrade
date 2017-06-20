@@ -1,14 +1,10 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export interface API {
-}
-
-export default <PluginDeclaration<API>>{
+export default Zhonya.addPlugin({
     name: 'dev-tools',
-    version: '1.0.0',
     description: 'Opens and displays the dev tools',
 
     api: api
-};
+});

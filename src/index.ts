@@ -3,14 +3,16 @@ import * as Logging from './logging';
 
 import * as method from './util/method';
 
-import allPlugins from './plugins';
+declare const require: any;
+
+const context = require.context('./plugins', true, /index.ts$/i);
+context.keys().forEach(context);
 
 Logging.log(`injected into ${location.href} (${location.hostname})`);
 
 if (location.hostname == '127.0.0.1') {
-    allPlugins.forEach(Zhonya.install);
+    Zhonya.start();
 
-    (<any>window).Zhonya = Zhonya;
     let opened: Window[] = [];
     window.addEventListener('beforeunload', e => {
         for (let win of opened) {

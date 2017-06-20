@@ -2,9 +2,7 @@ import { Provider } from 'base/plugin';
 
 import * as method from 'base/util/method';
 
-import { API as ComponentsInjector } from 'base/plugins/components-injector';
-
-let inject: ComponentsInjector;
+import componentsInjector from 'base/plugins/components-injector';
 
 function open(this: any, node: any) {
     let url = `https://na.op.gg/summoner/userName=${this.member.name}`;
@@ -26,9 +24,7 @@ function getContextMenu(this: any, original: Function, ...args: any[]) {
 }
 
 export function setup(hook: Provider) {
-    inject = hook.getPlugin<ComponentsInjector>('components-injector').api;
-
-    inject.hook('lol-social-roster-member', type => {
+    componentsInjector.api.hook('lol-social-roster-member', type => {
         method.replace(type.prototype, 'getContextMenu', getContextMenu);
     });
 }

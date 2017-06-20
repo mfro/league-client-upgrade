@@ -1,14 +1,9 @@
-import { PluginDeclaration } from 'base/plugin';
+import * as Zhonya from 'base/main';
 
 import * as api from './api';
 
-export interface API {
-    add: (key: string, value: string) => void;
-}
-
-export default <PluginDeclaration<API>>{
+export default Zhonya.addPlugin({
     name: 'l10n-injector',
-    version: '1.0.0',
     description: 'Utility plugin for adding strings to the league client for custom UI components',
 
     riotDependencies: {
@@ -17,4 +12,4 @@ export default <PluginDeclaration<API>>{
     },
 
     api: api
-}
+});

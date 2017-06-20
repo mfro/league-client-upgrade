@@ -2,7 +2,7 @@ import { Provider } from 'base/plugin';
 
 import Backlog from 'base/util/backlog';
 
-import { API as L10nInjector } from 'base/plugins/l10n-injector';
+// import l10nInjector from 'base/plugins/l10n-injector';
 
 // import Vue from 'vue';
 
@@ -10,13 +10,11 @@ import BooleanSetting from './boolean';
 // import PluginList from './plugin-list';
 
 let rcpSettings: any;
-let l10n: L10nInjector;
 
 const default_category = 'lol-general';
 // const settings_namespace = 'zhonya-settings';
 
 const init_backlog = new Backlog();
-
 
 export function addBoolean(one: string, two: string, three: string | boolean, four?: boolean) {
     if (init_backlog.put(addBoolean, arguments)) return;
@@ -75,11 +73,9 @@ export function addBoolean(one: string, two: string, three: string | boolean, fo
 // }
 
 export function setup(hook: Provider) {
-    l10n = hook.getPlugin<L10nInjector>('l10n-injector').api;
-
     // addCategory(default_category, 'EXTRA SETTINGS', 'lol-general');
 
-    hook.postInit('rcp-fe-settings', plugin => {
+    hook.postInit('rcp-fe-lol-settings', plugin => {
         rcpSettings = plugin.api;
 
         init_backlog.flush();

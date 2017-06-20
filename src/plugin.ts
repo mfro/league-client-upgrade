@@ -17,7 +17,7 @@ export class Plugin<T> {
 
     private checkDepenency(name: string) {
         let deps = this.definition.dependencies;
-        if (!deps || !deps[name])
+        if (!deps || !deps.includes(name))
             throw new Error(`${this.definition.name}: Requested undeclared dependency ${name}.`);
         return true;
     }
@@ -44,10 +44,10 @@ export class Plugin<T> {
         if (this.state == PluginState.DISABLED)
             return false;
 
-        let dependencies = this.definition.riotDependencies || {};
-        for (let name in dependencies) {
+        let riot = this.definition.riotDependencies || {};
+        for (let name in riot) {
             let dep = provider.getRiotPlugin(name);
-            let version = dependencies[name];
+            let version = riot[name];
 
             if (!dep)
                 return this.disable(`${this.definition.name}: Could not find dependency ${name}. disabling...`);
@@ -56,16 +56,12 @@ export class Plugin<T> {
                 return this.disable(`${this.definition.name}: Version mismatch for dependency ${name}, expected ${version}, got ${dep.definition.version}. disabling...`);
         }
 
-        dependencies = this.definition.dependencies || {};
-        for (let name in dependencies) {
-            let dep = provider.getPlugin<any>(name);
-            let version = dependencies[name];
+        let dependencies = this.definition.dependencies || [];
+        for (let name of dependencies) {
+            let dep = provider.getPlugin(name);
 
             if (!dep)
                 return this.disable(`${this.definition.name}: Could not find dependency ${name}. disabling...`);
-
-            if (!semver.satisfies(dep.definition.version, version))
-                return this.disable(`${this.definition.name}: Version mismatch for dependency ${name}, expected ${version}, got ${dep.definition.version}. disabling...`);
 
             if (!dep.setup(provider))
                 return this.disable(`${this.definition.name}: Dependency ${dep.definition.name} failed to setup, disabling...`);
@@ -75,9 +71,9 @@ export class Plugin<T> {
             this.api.setup({
                 allPlugins: provider.allPlugins,
 
-                getPlugin: <T>(name: string) => {
+                getPlugin: (name: string) => {
                     this.checkDepenency(name);
-                    return provider.getPlugin<T>(name);
+                    return provider.getPlugin(name);
                 },
 
                 getRiotPlugin: (name) => {
@@ -120,10 +116,9 @@ export interface RiotPlugin {
 
 export interface PluginDefinition {
     name: string;
-    version: string;
     disabled?: boolean;
     description: string;
-    dependencies?: { [name: string]: string };
+    dependencies?: string[];
     riotDependencies?: { [name: string]: string };
 }
 
@@ -133,7 +128,7 @@ export interface PluginDeclaration<T> extends PluginDefinition {
 
 export interface Provider {
     allPlugins(): Plugin<any>[];
-    getPlugin<T>(key: string): Plugin<T>;
+    getPlugin(key: string): Plugin<any>;
     getRiotPlugin(key: string): RiotPlugin;
 
     preInit(key: string, callback: RiotPluginCallback): void;

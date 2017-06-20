@@ -1,4 +1,4 @@
-import { API as Observe } from 'base/plugins/observe';
+import observe from 'base/plugins/observe';
 // import * as Logging from 'base/logging';
 
 // import { Summoner } from 'rcp-be-lol-summoner/v1';
@@ -8,7 +8,6 @@ import * as Template from './layout.html';
 import GameMember from '../game-member';
 
 interface Data {
-    observe: Observe;
     blueTeam: any[];
     redTeam: any[];
     // data: { [id: number]: { summoner: Summoner, leagues: any[] } };
@@ -32,7 +31,7 @@ export default Template<Data>({
     },
 
     created() {
-        this.observe.bind('/lol-gameflow/v1').then(gameflow => {
+        observe.api.bind('/lol-gameflow/v1').then(gameflow => {
             gameflow.observe('/session', (data: any) => {
                 this.redTeam = data.gameData.teamTwo;
                 this.blueTeam = data.gameData.teamOne;
