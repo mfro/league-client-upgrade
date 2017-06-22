@@ -1,6 +1,6 @@
-import { Provider } from 'base/plugin';
-import request from 'base/util/request';
-import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+import request from 'utility/request';
+import * as Logging from 'logging';
 
 if (location.search == '?mfro-devtool-inject') {
     request<any[]>('http://localhost:8888/json').then(list => {
@@ -73,6 +73,8 @@ export function setup(hook: Provider) {
     });
 
     window.addEventListener('keydown', e => {
+        Logging.log('key', e.keyCode);
+
         if (e.keyCode == 123) create();
     });
 }

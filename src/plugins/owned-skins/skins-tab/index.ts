@@ -1,6 +1,6 @@
-// import * as Logging from 'base/logging';
+// import * as Logging from 'logging';
 
-import request from 'base/util/request';
+import request from 'utility/request';
 
 import * as Login from 'rcp-be-lol-login/v1';
 import * as GameData from 'rcp-be-lol-game-data/v1';

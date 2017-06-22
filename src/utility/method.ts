@@ -1,4 +1,4 @@
-import * as Logging from 'base/logging';
+import * as Logging from 'logging';
 
 /**
  * Replace method on target object.

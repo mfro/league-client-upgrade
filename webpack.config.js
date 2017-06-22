@@ -2,12 +2,13 @@ const path = require('path');
 
 module.exports = {
     name: 'electron',
-    entry: './src/index.ts',
+    entry: path.resolve(__dirname, 'src/index.ts'),
+
     output: {
-        path: path.resolve('build'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js',
     },
-    
+
     module: {
         rules: [
             {
@@ -45,8 +46,12 @@ module.exports = {
 
     resolve: {
         extensions: ['.js', '.ts'],
+
         alias: {
-            base: path.resolve('src')
+            'zhonya': path.resolve(__dirname, 'src/main'),
+            'utility': path.resolve(__dirname, 'src/utility'),
+            'plugins': path.resolve(__dirname, 'src/plugins'),
+            'logging': path.resolve(__dirname, 'src/logging')
         }
     },
 

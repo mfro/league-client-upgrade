@@ -1,4 +1,4 @@
-import * as method from 'base/util/method';
+import * as method from 'utility/method';
 
 interface HookCallback {
     (name: string, args: any): void;

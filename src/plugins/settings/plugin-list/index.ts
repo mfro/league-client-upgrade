@@ -1,4 +1,4 @@
-import { Plugin, PluginState } from 'base/plugin';
+import { Plugin, PluginState } from 'zhonya';
 
 import Vue from 'vue';
 

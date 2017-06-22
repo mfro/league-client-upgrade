@@ -3,15 +3,15 @@ import * as Zhonya from 'zhonya';
 import * as api from './api';
 
 export default Zhonya.addPlugin({
-    name: 'op.gg-embed',
-    description: 'Adds op.gg links to parts of the client',
+    name: 'ultimate-bravery',
+    description: 'Adds Ultimate Bravery to the client',
 
     riotDependencies: {
-        'rcp-fe-lol-social': '1.1.30',
+        'rcp-be-lol-chat': '1.2.171'
     },
 
     dependencies: [
-        'components-injector',
+        'observe'
     ],
 
     api: api

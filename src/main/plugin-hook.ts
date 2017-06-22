@@ -1,8 +1,10 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
-import * as Logging from 'base/logging';
+import * as Logging from 'logging';
 
-import * as method from 'base/util/method';
-import request from 'base/util/request';
+import * as method from 'utility/method';
+import request from 'utility/request';
+
+export const isDisabled = localStorage.getItem('ace-disable') == 'true';
 
 interface InitCallbacks {
     preInit?: (name: string) => void,
@@ -147,12 +149,11 @@ function hookImport(node: HTMLElement) {
     };
 }
 
-// if (!location.search.includes('DEBUG=.*'))
-//     location.search = '?DEBUG=.*';
+if (!isDisabled) {
+    method.before(document.head, 'appendChild', node => {
+        hookImport(node);
+    });
 
-method.before(document.head, 'appendChild', node => {
-    hookImport(node);
-});
-
-for (let child of Array.prototype.slice.call(document.head.children))
-    hookImport(child);
+    for (let child of Array.prototype.slice.call(document.head.children))
+        hookImport(child);
+}

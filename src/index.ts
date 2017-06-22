@@ -1,16 +1,19 @@
 import * as Zhonya from './main';
 import * as Logging from './logging';
 
-import * as method from './util/method';
+import * as method from 'utility/method';
 
 declare const require: any;
 
-const context = require.context('./plugins', true, /index.ts$/i);
-context.keys().forEach(context);
-
 Logging.log(`injected into ${location.href} (${location.hostname})`);
 
-if (location.hostname == '127.0.0.1') {
+if (Zhonya.isDisabled)
+    Logging.log('disabling...');
+
+else if (location.hostname == '127.0.0.1') {
+    const context = require.context('./plugins', true, /\.\/[^\/]+\/index\.ts$/i);
+    context.keys().forEach(context);
+
     Zhonya.start();
 
     let opened: Window[] = [];
@@ -27,3 +30,15 @@ if (location.hostname == '127.0.0.1') {
         opened.push(win);
     });
 }
+
+window.addEventListener('keydown', e => {
+    if (e.keyCode != 116)
+        return;
+
+    if (Zhonya.isDisabled)
+        localStorage.removeItem('ace-disable');
+    else
+        localStorage.setItem('ace-disable', 'true');
+
+    location.reload();
+});

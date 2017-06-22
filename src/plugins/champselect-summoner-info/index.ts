@@ -1,4 +1,4 @@
-import * as Zhonya from 'base/main';
+import * as Zhonya from 'zhonya';
 
 import * as api from './api';
 

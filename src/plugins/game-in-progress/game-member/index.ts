@@ -1,5 +1,5 @@
-import observe from 'base/plugins/observe';
-import * as Logging from 'base/logging';
+import observe from 'plugins/observe';
+import * as Logging from 'logging';
 
 import { Summoner } from 'rcp-be-lol-summoner/v1';
 // import * as Common from 'rcp-fe-common-libs/v1';

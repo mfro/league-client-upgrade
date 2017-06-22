@@ -1,9 +1,9 @@
-import { Provider } from 'base/plugin';
-// import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+// import * as Logging from 'logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 
-import l10nInjector from 'base/plugins/l10n-injector';
+import l10nInjector from 'plugins/l10n-injector';
 
 import SkinsTab from './skins-tab';
 import Vue from 'vue';

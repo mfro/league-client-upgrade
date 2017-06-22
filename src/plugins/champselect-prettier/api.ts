@@ -1,15 +1,15 @@
-import { Provider } from 'base/plugin';
-import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+import * as Logging from 'logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
 
-import emberInjector from 'base/plugins/ember-injector';
+import emberInjector from 'plugins/ember-injector';
 
 import * as style from './style.less';
 
-function prettier(this: ChampSelectComponent, member: ChampSelect.Member, Ember: Ember) {
+function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
     let session = this.get('session');
 
     const index = member.cellId % 5;

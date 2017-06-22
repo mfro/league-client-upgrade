@@ -1,14 +1,14 @@
-import { Provider } from 'base/plugin';
-import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+import * as Logging from 'logging';
 
-import request from 'base/util/request';
+import request from 'utility/request';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as Summoner from 'rcp-be-lol-summoner/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
 
-import emberInjector from 'base/plugins/ember-injector';
+import emberInjector from 'plugins/ember-injector';
 
 import Tooltip from './tooltip';
 import Vue from 'vue';
@@ -16,7 +16,7 @@ import Vue from 'vue';
 let trans: Promise<any>;
 let uikit: any;
 
-function addTooltip(this: ChampSelectComponent, member: ChampSelect.Member, Ember: Ember) {
+function addTooltip(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
     let summoner: Summoner.Summoner;
     let leagues: any[];
     request<Summoner.Summoner>(`/lol-summoner/v2/summoners?name=${member.displayName}`).then<any[]>(data => {

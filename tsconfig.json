@@ -12,10 +12,12 @@
         "outDir": "temp",
 
         "baseUrl": ".",
+        
         "paths": {
-            "base/*": [
-                "src/*"
-            ]
+            "zhonya": ["src/main"],
+            "logging": ["src/logging"],
+            "utility/*": ["src/utility/*"],
+            "plugins/*": ["src/plugins/*"]
         }
     },
     

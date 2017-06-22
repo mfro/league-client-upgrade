@@ -1,9 +1,9 @@
-import { Provider } from 'base/plugin';
-// import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+// import * as Logging from 'logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 
-import emberInjector from 'base/plugins/ember-injector';
+import emberInjector from 'plugins/ember-injector';
 
 import * as style from './style.less';
 

@@ -1,7 +1,7 @@
-import { Provider, RiotPlugin } from 'base/plugin';
-// import * as Logging from 'base/logging';
+import { Provider, RiotPlugin } from 'zhonya';
+// import * as Logging from 'logging';
 
-import * as method from 'base/util/method';
+import * as method from 'utility/method';
 
 const injections = new Map<string, string>();
 

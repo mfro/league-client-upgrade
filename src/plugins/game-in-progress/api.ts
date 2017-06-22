@@ -1,5 +1,5 @@
-import { Provider } from 'base/plugin';
-import * as Logging from 'base/logging';
+import { Provider } from 'zhonya';
+import * as Logging from 'logging';
 
 import Vue from 'vue';
 
