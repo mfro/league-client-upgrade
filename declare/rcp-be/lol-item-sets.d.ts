@@ -9,13 +9,24 @@ declare module 'rcp-be-lol-item-sets/v1' {
     interface Set {
         associatedChampions: number[];
         associatedMaps: number[];
-        blocks: never[];
+        blocks: SetBlock[];
         map: "any" | "SR" | "HA" | "TT" | "CS";
         mode: "any" | "CLASSIC" | "ARAM" | "ODIN";
         sortrank: number;
-        startedFrom: string;
+        priority?: boolean;
+        startedFrom?: string;
         title: string;
         type: "global" | "custom";
         uid: string;
+    }
+
+    interface SetBlock {
+        items: SetItem[];
+        type: string;
+    }
+
+    interface SetItem {
+        id: string;
+        count: number;
     }
 }

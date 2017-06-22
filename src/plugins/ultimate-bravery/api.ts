@@ -33,7 +33,8 @@ const keywords = [
 ];
 
 const wrong = {
-    normal: [3070, 3029, 3003, 3004],
+    disabled: [3252, 3112, 3184],
+    normal: [3070, 3027, 3003, 3004, 3026, 3056],
     quick: [3073, 3029, 3007, 3008],
 };
 
@@ -76,7 +77,7 @@ function build(action: ChampSelect.Action) {
         let build = <BraveBuild><any>{};
 
         let i = Math.floor(Math.random() * pickable.championIds.length);
-        build.championId = pickable.championIds[i];
+        build.championId = 69;//pickable.championIds[i];
 
         let map = session.gameData.queue.mapId;
         let mode = session.gameData.queue.gameMode;
@@ -92,15 +93,26 @@ function build(action: ChampSelect.Action) {
             i.mapInclusions.includes(map) &&
             i.id >= 3000 &&
             i.to.length == 0 &&
+            i.inStore &&
+            i.specialRecipe == 0 &&
+            !i.isEnchantment &&
             !boots.includes(i.id) &&
+            !i.categories.includes('Trinket') &&
+            !i.categories.includes("GoldPer") &&
+            (i.requiredChampion == '' || i.requiredChampion == null) &&
+            (i.requiredBuffCurrencyName == '' || i.requiredBuffCurrencyName == null) &&
+            !wrong.disabled.includes(i.id) &&
             ((!wrong.quick.includes(i.id) && !wrong.normal.includes(i.id)) ||
                 (wrong.quick.includes(i.id) && map == 12) ||
                 (wrong.normal.includes(i.id) && map != 12)));
 
         build.items = [];
-        build.items.push(boots[Math.floor(Math.random() * boots.length)]);
 
-        for (var j = 0; j < 5; j++) {
+        if (build.championId != 69)
+            build.items.push(boots[Math.floor(Math.random() * boots.length)]);
+
+        let left = 6 - build.items.length;
+        for (var j = 0; j < left; j++) {
             let i = Math.floor(Math.random() * validItems.length);
             build.items.push(validItems.splice(i, 1)[0].id);
         }
@@ -153,15 +165,18 @@ function lockIn(build: BraveBuild, action: ChampSelect.Action) {
         spell2Id: build.spell2Id
     });
 
-    itemSets.get<any>(`/item-sets/${loginSession.summonerId}/sets`).then(data => {
+    itemSets.get<ItemSets.Sets>(`/item-sets/${loginSession.summonerId}/sets`).then(data => {
         data.itemSets.push({
             associatedChampions: [build.championId],
             associatedMaps: [],
-            blocks: [],
+            blocks: [{
+                type: 'Build these:',
+                items: build.items.map(id => ({ id: id.toString(), count: 1 })),
+            }],
             map: "any",
             mode: "any",
             sortrank: 0,
-            title: "Ultimate Bravery | Ability: " + build.spell,
+            title: "Ability: " + build.spell,
             type: "custom",
             uid: 'ultimate-bravery-' + guid()
         });
