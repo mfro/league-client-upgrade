@@ -1,5 +1,5 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
-import * as Logging from 'logging';
+// import * as Logging from 'logging';
 
 import * as method from 'utility/method';
 import request from 'utility/request';
@@ -138,12 +138,9 @@ function hookImport(node: HTMLElement) {
     let late = Boolean(node.import);
 
     if (late)
-        Logging.error('too late to load', name);
+        window.location.reload();
 
     node.onload = () => {
-        if (late)
-            Logging.error('jk not too late', name);
-
         hook(name!, node.import!);
         load();
     };

@@ -50,4 +50,39 @@ declare module 'rcp-be-lol-game-data/v1' {
         name: string;
         summonerLevel: number;
     }
+
+    interface Masteries {
+        type: string;
+        tree: {
+            groups: MasteryGroup[];
+        };
+        data: {
+            [id: string]: MasteryDefinition
+        };
+    }
+
+    interface MasteryGroup {
+        id: number;
+        name: string;
+        version: number;
+        rows: MasteryRow[];
+    }
+
+    interface MasteryRow {
+        id: number;
+        pointsToActivate: number;
+        maxPointsInRow: number;
+        masteries: number[];
+    }
+
+    interface MasteryDefinition {
+        id: number;
+        column: number;
+        maxRank: number;
+        minTier: number;
+        minLevel: number;
+        name: string;
+        iconPath: string;
+        description: string[];
+    }
 }

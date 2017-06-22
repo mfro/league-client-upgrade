@@ -73,8 +73,6 @@ export function setup(hook: Provider) {
     });
 
     window.addEventListener('keydown', e => {
-        Logging.log('key', e.keyCode);
-
         if (e.keyCode == 123) create();
     });
 }
