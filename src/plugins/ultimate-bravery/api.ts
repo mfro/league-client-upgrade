@@ -77,7 +77,7 @@ function build(action: ChampSelect.Action) {
         let build = <BraveBuild><any>{};
 
         let i = Math.floor(Math.random() * pickable.championIds.length);
-        build.championId = 69;//pickable.championIds[i];
+        build.championId = pickable.championIds[i];
 
         let map = session.gameData.queue.mapId;
         let mode = session.gameData.queue.gameMode;
