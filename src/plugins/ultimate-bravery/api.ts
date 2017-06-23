@@ -244,7 +244,7 @@ function onMessage(room: Chat.Conversation, msg: Chat.Message) {
     if (isBrave)
         return;
 
-    if (keywords.includes(msg.body.toLowerCase())) {
+    if (msg.fromId == me.id && keywords.includes(msg.body.toLowerCase())) {
         isBrave = true;
 
         chat.post(`/conversations/${encodeURIComponent(chatRoomName!)}/messages`, <Chat.Message>{

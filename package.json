@@ -2,7 +2,7 @@
   "name": "zhonya",
   "description": "Modifications for the league client update",
   "author": "mfro",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "private": true,
 
   "devDependencies": {
