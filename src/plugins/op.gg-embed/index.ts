@@ -7,7 +7,7 @@ export default Zhonya.addPlugin({
     description: 'Adds op.gg links to parts of the client',
 
     riotDependencies: {
-        'rcp-fe-lol-social': '1.1.30',
+        'rcp-fe-lol-social': '1.1.43',
     },
 
     dependencies: [
