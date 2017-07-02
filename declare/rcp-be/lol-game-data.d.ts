@@ -20,6 +20,11 @@ declare module 'rcp-be-lol-game-data/v1' {
         id: number;
     }
 
+    interface Icon {
+        id: number;
+        iconPath: string;
+    }
+
     interface Item {
         id: number;
         name: string;

@@ -1,0 +1,35 @@
+.icon {
+    cursor: pointer;
+    margin: 6px;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-position: center;
+    border: 1px solid #3c3c41;
+    position: relative;
+
+    &.owned:hover {
+        border-image-slice: 1;
+        border-image-repeat: stretch;
+        border-image-source: linear-gradient(to bottom, #f0e6d2 4%, #c89b3c 100%);
+    }
+
+    &:not(.owned):after {
+        content: "";
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5) url("/fe/lol-uikit/images/icon-lock-small.png");
+        position: absolute;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: 0.4s ease;
+    }
+
+    &:not(.owned):hover:after {
+        background: rgba(0, 0, 0, 0.4) url("/fe/lol-uikit/images/icon-lock-small.png");
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}

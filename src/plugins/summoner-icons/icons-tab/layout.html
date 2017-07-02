@@ -1,0 +1,32 @@
+<style src="./style.less" />
+
+<component src="../icon" />
+
+<div class="icons-component">
+    <div class="loading-spinner" :class="{ 'loading-fade-out': icons }" />
+
+    <div class="icons-root" :class="{ 'loading-fade-in': icons }">
+        <div class="left-pane">
+            <div class="count">
+                <!-- Skin count out of total. -->
+                <span class="number owned">{{ ownedCount }}</span>
+                <span class="of">of</span>
+                <span class="number total">{{ totalCount }}</span>
+                <span class="icons-text">ICONS</span>
+            </div>
+
+            <!-- Show unowned checkbox. Uses the builtin uikit component. -->
+            <lol-uikit-flat-checkbox class="show-unowned" @checkboxToggle="showUnowned = !showUnowned">
+                <input type="checkbox" :checked="showUnowned">
+                <label>Show Unowned</label>
+            </lol-uikit-flat-checkbox>
+        </div>
+
+        <!-- By wrapping our view in lol-uikit-scrollable, we automatically get LCU-style scrollbars. -->
+        <lol-uikit-scrollable class="right-pane">
+            <template v-for="icon in sorted">
+                <icon :key="icon.id" :icon="icon" :uikit="uikit" :owned="owned.includes(icon.id)"/>
+            </template>
+        </lol-uikit-scrollable>
+    </div>
+</div>
