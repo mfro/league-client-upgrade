@@ -1,5 +1,5 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'logging';
+// import * as Logging from 'logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
@@ -10,19 +10,21 @@ import emberInjector from 'plugins/ember-injector';
 import * as style from './style.less';
 
 function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
-    let session = this.get('session');
+    // let session = this.get('session');
 
     const index = member.cellId % 5;
     const node = this.$('.lines .summoner-wrapper').eq(index);
 
-    const id = member.championId;
-    if (id) {
-        node.css('background-image', `url(/lol-game-data/assets/v1/champion-splashes/${id}/${id}000.jpg)`);
+    const champId = member.championId;
+    const skinId = member.selectedSkinId;
+    
+    if (champId) {
+        node.css('background-image', `url(/lol-game-data/assets/v1/champion-splashes/${champId}/${skinId}.jpg)`);
     } else {
         node.css('background-image', '');
     }
 
-    Logging.log(session, member, node);
+    // Logging.log(session, member, node);
 }
 
 function mixin(Ember: Ember) {

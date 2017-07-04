@@ -5,7 +5,7 @@
         <game-member v-for="member in blueTeam" :member="member"/>
     </div>
 
-    <div class="red-team">
+    <div class="red-team" v-if="redTeam">
         <game-member v-for="member in redTeam" :member="member"/>
     </div>
 </div>

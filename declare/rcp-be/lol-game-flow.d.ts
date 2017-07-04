@@ -1,4 +1,4 @@
-declare module 'rcp-be-lol-game-flow/v1' {
+declare module 'rcp-be-lol-gameflow/v1' {
     interface Session {
         gameClient: GameClient;
         gameData: GameData;

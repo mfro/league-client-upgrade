@@ -1,3 +1,5 @@
+import Vue from '@mfro/vue-ts';
+
 // import * as Logging from 'logging';
 
 import request from 'utility/request';
@@ -5,71 +7,60 @@ import request from 'utility/request';
 import * as Login from 'rcp-be-lol-login/v1';
 import * as GameData from 'rcp-be-lol-game-data/v1';
 
-import * as Template from './layout.html';
+import * as template from './layout.html';
 
-interface Data {
+@Vue.Component({ mixins: [template.mixin] })
+export default class SkinsTab extends Vue {
+    @Vue.Data
     champions: GameData.Champion[] | null;
-    showUnowned: boolean;
-    sort: string;
 
-    //non-reactive
+    @Vue.Data
+    showUnowned = false;
+
+    @Vue.Data
+    sort = 'alphabet';
+
+    @Vue.Data
+    group = true;
+
     uikit: any;
-    championDetails: any;
     mastery: GameData.ChampionMastery[];
+    championDetails: any;
 
-    //computed
-    sorted: GameData.Champion[] | null;
-    ownedCount: number;
-    totalCount: number;
-}
+    get ownedCount() {
+        return this.champions && this.champions.reduce((a, b) => a + b.skins.filter(s => s.ownership.owned).length - 1, 0);
+    }
 
-export default Template<Data>({
-    data() {
-        return {
-            champions: null,
+    get totalCount() {
+        return this.champions && this.champions.reduce((a, b) => a + b.skins.length - 1, 0);
+    }
 
-            group: true,
-            showUnowned: false,
-            sort: 'alphabet',
-        }
-    },
+    get sorted() {
+        if (!this.champions) return null;
 
-    computed: {
-        ownedCount() {
-            return this.champions && this.champions.reduce((a, b) => a + b.skins.filter(s => s.ownership.owned).length - 1, 0);
-        },
+        let list = this.champions.filter(champ => {
+            if (champ.id < 0)
+                return false;
 
-        totalCount() {
-            return this.champions && this.champions.reduce((a, b) => a + b.skins.length - 1, 0);
-        },
+            if (!this.showUnowned && champ.skins.filter(s => s.ownership.owned).length == 1)
+                return false;
 
-        sorted() {
-            if (!this.champions) return null;
+            return true;
+        });
 
-            let list = this.champions.filter(champ => {
-                if (champ.id < 0)
-                    return false;
-                
-                if (!this.showUnowned && champ.skins.filter(s => s.ownership.owned).length == 1)
-                    return false;
-
-                return true;
-            });
-
-            return list.sort((a, b) => {
-                switch (this.sort) {
-                    default: return 0;
-                    case 'alphabet': return alphabet(a, b);
-                    case 'count': return count(a, b);
-                    case 'mastery':
-                        if (!this.mastery) return 0;
-                        const masteryA = this.mastery.find(m => m.championId === a.id);
-                        const masteryB = this.mastery.find(m => m.championId === b.id);
-                        return mastery(masteryA, masteryB);
-                };
-            });
-        }
-    },
+        return list.sort((a, b) => {
+            switch (this.sort) {
+                default: return 0;
+                case 'alphabet': return alphabet(a, b);
+                case 'count': return count(a, b);
+                case 'mastery':
+                    if (!this.mastery) return 0;
+                    const masteryA = this.mastery.find(m => m.championId === a.id);
+                    const masteryB = this.mastery.find(m => m.championId === b.id);
+                    return mastery(masteryA, masteryB);
+            };
+        });
+    }
 
     created() {
         // Step 1: Fetch summoner id.
@@ -87,7 +78,7 @@ export default Template<Data>({
             this.champions = champs;
         });
     }
-});
+}
 
 function alphabet(a: GameData.Champion, b: GameData.Champion) {
     return a.name.localeCompare(b.name);

@@ -6,7 +6,7 @@ declare module 'rcp-be-lol-champ-select/v1' {
         championPickIntent: number;
         displayName: string;
         playerType: string;
-        selcetedSkinId: number;
+        selectedSkinId: number;
         spell1Id: number;
         spell2Id: number;
         team: number;

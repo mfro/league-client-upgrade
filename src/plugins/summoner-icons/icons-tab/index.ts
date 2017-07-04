@@ -1,3 +1,5 @@
+import Vue from '@mfro/vue-ts';
+
 import * as Logging from 'logging';
 
 import request from 'utility/request';
@@ -5,57 +7,41 @@ import request from 'utility/request';
 import * as Login from 'rcp-be-lol-login/v1';
 import * as GameData from 'rcp-be-lol-game-data/v1';
 
-import * as Template from './layout.html';
+import * as template from './layout.html';
 
-interface Data {
-    icons: GameData.Icon[] | null;
+@Vue.Component({ mixins: [template.mixin] })
+export default class IconsTab extends Vue {
+    @Vue.Data
+    icon: GameData.Icon[] | null;
+
+    @Vue.Data
     owned: number[];
 
-    showUnowned: boolean;
-    sort: string;
+    @Vue.Data
+    showUnowned = false;
 
-    //non-reactive
-    uikit: any;
+    icons: GameData.Icon[] | null;
 
-    //computed
-    sorted: GameData.Champion[] | null;
-    ownedCount: number;
-    totalCount: number;
-}
+    get ownedCount() {
+        return this.owned && this.owned.length;
+    }
 
-export default Template<Data>({
-    data() {
-        return {
-            icons: null,
-            owned: null,
+    get totalCount() {
+        return this.icons && this.icons.length - this.owned.length;
+    }
 
-            showUnowned: false,
-            sort: 'alphabet',
-        }
-    },
+    get sorted() {
+        if (!this.icons) return null;
 
-    computed: {
-        ownedCount() {
-            return this.owned && this.owned.length;
-        },
+        let list = this.icons.filter(icon => {
+            if (!this.showUnowned && !this.owned.includes(icon.id))
+                return false;
 
-        totalCount() {
-            return this.icons && this.icons.length - this.owned.length;
-        },
+            return true;
+        });
 
-        sorted() {
-            if (!this.icons) return null;
-
-            let list = this.icons.filter(icon => {
-                if (!this.showUnowned && !this.owned.includes(icon.id))
-                    return false;
-
-                return true;
-            });
-
-            return list;
-        }
-    },
+        return list;
+    }
 
     created() {
         // Step 1: Fetch summoner id.
@@ -74,4 +60,4 @@ export default Template<Data>({
             Logging.log(this.icons, this.owned, this);
         });
     }
-});
+}

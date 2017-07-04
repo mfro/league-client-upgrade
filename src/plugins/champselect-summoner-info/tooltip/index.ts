@@ -1,3 +1,6 @@
-import * as Template from './layout.html';
+import Vue from '@mfro/vue-ts';
 
-export default Template({});
+import * as template from './layout.html';
+
+@Vue.Component({ mixins: [template.mixin] })
+export default class SummonerInfoTooltip extends Vue { }

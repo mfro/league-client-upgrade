@@ -1,5 +1,5 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'logging';
+// import * as Logging from 'logging';
 
 import * as CommonLibs from 'rcp-fe-common-libs/v1';
 
@@ -21,7 +21,7 @@ export function setup(hook: Provider) {
             createBinding = create;
             socket = plugin.provider!.getSocket();
 
-            Logging.log('resolving observe');
+            // Logging.log('resolving observe');
 
             resolve();
         }, (e: any) => {

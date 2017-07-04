@@ -2,7 +2,8 @@ import observe from 'plugins/observe';
 // import * as Logging from 'logging';
 
 // import { Summoner } from 'rcp-be-lol-summoner/v1';
-import * as Common from 'rcp-fe-common-libs/v1';
+import * as Gameflow from 'rcp-be-lol-gameflow/v1';
+// import * as Common from 'rcp-fe-common-libs/v1';
 
 import * as Template from './layout.html';
 import GameMember from '../game-member';
@@ -10,11 +11,11 @@ import GameMember from '../game-member';
 interface Data {
     blueTeam: any[];
     redTeam: any[];
+    data: Gameflow.Session;
     // data: { [id: number]: { summoner: Summoner, leagues: any[] } };
 
     // leagues: Common.Binding;
     // summoner: Common.Binding;
-    gameflow: Common.Binding;
 
     // getData(isAlly: boolean, member: any): void;
 }
@@ -25,14 +26,20 @@ export default Template<Data>({
     data() {
         return {
             data: {},
-            redTeam: null,
-            blueTeam: null,
         };
+    },
+
+    computed: {
+        redTeam() {
+            
+        }
     },
 
     created() {
         observe.api.bind('/lol-gameflow/v1').then(gameflow => {
             gameflow.observe('/session', (data: any) => {
+                this.data = data;
+
                 this.redTeam = data.gameData.teamTwo;
                 this.blueTeam = data.gameData.teamOne;
             });

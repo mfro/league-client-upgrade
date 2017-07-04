@@ -7,8 +7,8 @@ declare interface Window {
 }
 
 declare module "*.html" {
-    import Vue from 'vue';
-    const x: <T>(a: Vue.ComponentOptions<T & Vue>) => Vue.ComponentOptions<T & Vue>;
+    import Template from '@mfro/vue-loader'
+    const x: Template;
     export = x;
 }
 

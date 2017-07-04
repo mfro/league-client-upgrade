@@ -5,8 +5,8 @@ import * as CommonLibs from 'rcp-fe-common-libs/v1';
 
 import * as Chat from 'rcp-be-lol-chat/v1';
 import * as Login from 'rcp-be-lol-login/v1';
+import * as Gameflow from 'rcp-be-lol-gameflow/v1';
 import * as GameData from 'rcp-be-lol-game-data/v1';
-import * as GameFlow from 'rcp-be-lol-game-flow/v1';
 import * as ItemSets from 'rcp-be-lol-item-sets/v1';
 import * as Collections from 'rcp-be-lol-collection/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
@@ -66,7 +66,7 @@ function build(action: ChampSelect.Action) {
     Promise.all([
         champSelect.get<{ championIds: number[] }>('/pickable-champions'),
 
-        gameFlow.get<GameFlow.Session>('/session'),
+        gameFlow.get<Gameflow.Session>('/session'),
 
         gameData.get<GameData.Item[]>('/items.json'),
 
@@ -283,7 +283,7 @@ function onChampSelectSession(value: ChampSelect.Session) {
     });
 }
 
-function onGameFlowSession(value: GameFlow.Session) {
+function onGameFlowSession(value: Gameflow.Session) {
     if (value == null)
         return;
 
@@ -301,7 +301,7 @@ function onGameFlowSession(value: GameFlow.Session) {
 
 function init() {
     chat.observe<Chat.User>('/me', m => me = m);
-    gameFlow.observe<GameFlow.Session>('/session', onGameFlowSession);
+    gameFlow.observe<Gameflow.Session>('/session', onGameFlowSession);
     champSelect.observe<ChampSelect.Session>('/session', onChampSelectSession);
 
     login.observe<Login.Session>('/session', s => loginSession = s);
