@@ -151,6 +151,7 @@ if (!isDisabled) {
         hookImport(node);
     });
 
-    for (let child of Array.prototype.slice.call(document.head.children))
+    for (let child of Array.prototype.slice.call(document.head.children)) {
         hookImport(child);
+    }
 }

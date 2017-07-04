@@ -5,7 +5,7 @@ import Ember from 'rcp-fe-ember-libs/v1';
 
 import emberInjector from 'plugins/ember-injector';
 
-import * as style from './style.less';
+import style from './style.less';
 
 function Mixin(Ember: Ember) {
     return {

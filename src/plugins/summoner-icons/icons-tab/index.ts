@@ -1,6 +1,6 @@
 import Vue from '@mfro/vue-ts';
 
-import * as Logging from 'logging';
+// import * as Logging from 'logging';
 
 import request from 'utility/request';
 
@@ -20,6 +20,7 @@ export default class IconsTab extends Vue {
     @Vue.Data
     showUnowned = false;
 
+    @Vue.Data
     icons: GameData.Icon[] | null;
 
     get ownedCount() {
@@ -57,7 +58,7 @@ export default class IconsTab extends Vue {
             this.icons = all;
             this.owned = owned.icons;
 
-            Logging.log(this.icons, this.owned, this);
+            // Logging.log(this.icons, this.owned, this.totalCount, this);
         });
     }
 }

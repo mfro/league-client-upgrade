@@ -7,7 +7,7 @@ import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
 
 import emberInjector from 'plugins/ember-injector';
 
-import * as style from './style.less';
+import style from './style.less';
 
 function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
     // let session = this.get('session');
