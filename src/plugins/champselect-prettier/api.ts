@@ -1,11 +1,11 @@
 import { Provider } from 'zhonya';
-// import * as Logging from 'logging';
+// import * as Logging from 'zhonya/logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
 
-import emberInjector from 'plugins/ember-injector';
+import emberInjector from 'zhonya/plugins/ember-injector';
 
 import style from './style.less';
 

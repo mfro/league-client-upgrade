@@ -1,5 +1,5 @@
-import observe from 'plugins/observe';
-// import * as Logging from 'logging';
+import observe from 'zhonya/plugins/observe';
+// import * as Logging from 'zhonya/logging';
 
 // import { Summoner } from 'rcp-be-lol-summoner/v1';
 import * as Gameflow from 'rcp-be-lol-gameflow/v1';

@@ -1,11 +1,11 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'logging';
+import * as Logging from 'zhonya/logging';
 
 import * as Matchmaking from 'rcp-be-lol-matchmaking/v1';
 import * as CommonLibs from 'rcp-fe-common-libs/v1';
 
-import settings from 'plugins/settings';
-import observe from 'plugins/observe';
+import settings from 'zhonya/plugins/settings';
+import observe from 'zhonya/plugins/observe';
 
 let matchmaking: CommonLibs.Binding;
 

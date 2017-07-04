@@ -28,7 +28,7 @@
     "babel-preset-es2015": "^6.24.1",
 
     "@mfro/vue-loader": "^1.2.0",
-    "@mfro/vue-ts": "^1.0.3",
+    "@mfro/vue-ts": "^1.0.4",
 
     "opn": "^5.1.0",
 
@@ -42,7 +42,8 @@
     "build": "webpack -p",
     "watch": "webpack --watch",
     "serve": "http-server ./build -c5",
-    "start": "electron ."
+
+    "stats": "webpack --json --profile > build/stats.json"
   },
 
   "main": "build/bundle.js"

@@ -1,7 +1,7 @@
 import { Provider } from 'zhonya';
-// import * as Logging from 'logging';
+// import * as Logging from 'zhonya/logging';
 
-import * as method from 'utility/method';
+import * as method from 'zhonya/util/method';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 

@@ -1,15 +1,10 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
-// import * as Logging from 'logging';
+import * as Logging from 'zhonya/logging';
 
-import * as method from 'utility/method';
-import request from 'utility/request';
+import * as method from 'zhonya/util/method';
+import request from 'zhonya/util/request';
 
 export const isDisabled = localStorage.getItem('ace-disable') == 'true';
-
-interface InitCallbacks {
-    preInit?: (name: string) => void,
-    postInit?: (name: string, api: any, provider: PluginRunner.Provider) => void
-}
 
 interface RegistrationHandler {
     (handler: (provider: PluginRunner.Provider) => Promise<any>): void
@@ -35,8 +30,8 @@ interface PendingPlugin {
     resolve(api: PluginAPI): void;
 }
 
-let callbacks: InitCallbacks;
-let pending: PendingPlugin[] = [];
+let pending: PendingPlugin[] | null = [];
+let hooks = new Map<string, Map<string, Function[]>>();
 
 function dummyFunction() { }
 
@@ -53,29 +48,57 @@ export function getMetaData() {
     }).catch(error => <PluginRunner.PluginDefinition[]>[]);
 }
 
-/** Load all of the riot pending plugins */
-export function load(cbs: InitCallbacks) {
-    callbacks = cbs;
+export function hook(plugin: string, event: 'preInit', cb: (name: string) => void): void
+export function hook(plugin: string, event: 'postInit', cb: (name: string, api: any, provider: PluginRunner.Provider) => void): void
+export function hook(plugin: string, event: string, cb: Function) {
+    let map = hooks.get(plugin);
+    if (!map) hooks.set(plugin, map = new Map());
 
-    pending.forEach(loadPlugin);
+    let list = map.get(event);
+    if (!list) map.set(event, list = []);
+
+    list.push(cb);
+}
+
+/** Load all of the riot pending plugins */
+export function start() {
+    if (pending == null)
+        throw new Error('Already started');
+
+    let todo = pending;
+    pending = null;
+    todo.forEach(loadPlugin);
+}
+
+function emit(plugin: string, event: string, args: any[]) {
+    let hook = hooks.get(plugin);
+    if (!hook) return;
+
+    let list = hook.get(event);
+    if (!list) return;
+
+    for (let cb of list) {
+        cb(...args);
+    }
 }
 
 function loadPlugin(plugin: PendingPlugin) {
-    callbacks.preInit && callbacks.preInit(plugin.name);
+    emit(plugin.name, 'preInit', [plugin.name]);
 
     let wrapped: PluginAPI = {
         init(provider) {
             let promise = Promise.resolve(plugin.api.init(provider))
 
             return promise.then(result => {
-                callbacks.postInit && callbacks.postInit(plugin.name, result, provider);
+                emit(plugin.name, 'postInit', [plugin.name, result, provider]);
+                hooks.delete(plugin.name);
 
                 return result;
             });
         },
 
         destroy() {
-            // Logging.log('destroy', plugin.name, ...arguments);
+            Logging.log('destroy', plugin.name, ...arguments);
             return plugin.api.destroy();
         },
 
@@ -88,7 +111,7 @@ function loadPlugin(plugin: PendingPlugin) {
     plugin.resolve(wrapped);
 }
 
-function hook(name: string, document: HTMLDocument) {
+function hookDocument(name: string, document: HTMLDocument) {
     // 1: Replace the dispatchEvent method on the plugin's document
     method.replace(document, 'dispatchEvent', (original, event: AnnounceEvent) => {
         if (event.type != 'riotPlugin.announce')
@@ -114,10 +137,10 @@ function hook(name: string, document: HTMLDocument) {
             };
 
             // 4: Either delay or load the plugin
-            if (callbacks)
-                loadPlugin(plugin);
-            else
+            if (pending)
                 pending.push(plugin);
+            else
+                loadPlugin(plugin);
         };
 
         // 3: Call the original dispatchEvent method
@@ -141,7 +164,7 @@ function hookImport(node: HTMLElement) {
         window.location.reload();
 
     node.onload = () => {
-        hook(name!, node.import!);
+        hookDocument(name!, node.import!);
         load();
     };
 }

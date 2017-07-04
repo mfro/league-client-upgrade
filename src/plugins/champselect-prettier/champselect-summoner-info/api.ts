@@ -1,14 +1,14 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'logging';
+import * as Logging from 'zhonya/logging';
 
-import request from 'utility/request';
+import request from 'zhonya/util/request';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import * as Summoner from 'rcp-be-lol-summoner/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 import { ChampSelectComponent } from 'rcp-fe-lol-champ-select/v1';
 
-import emberInjector from 'plugins/ember-injector';
+import emberInjector from 'zhonya/plugins/ember-injector';
 
 import Tooltip from './tooltip';
 import Vue from 'vue';

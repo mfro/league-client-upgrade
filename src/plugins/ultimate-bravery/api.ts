@@ -1,5 +1,5 @@
 import * as Zhonya from 'zhonya';
-import * as Logging from 'logging';
+import * as Logging from 'zhonya/logging';
 
 import * as CommonLibs from 'rcp-fe-common-libs/v1';
 
@@ -11,7 +11,7 @@ import * as ItemSets from 'rcp-be-lol-item-sets/v1';
 import * as Collections from 'rcp-be-lol-collection/v1';
 import * as ChampSelect from 'rcp-be-lol-champ-select/v1';
 
-import observe from 'plugins/observe';
+import observe from 'zhonya/plugins/observe';
 
 interface BraveBuild {
     spell1Id: number;

@@ -1,7 +1,10 @@
+import Vue from '@mfro/vue-ts';
+
 import * as GameData from 'rcp-be-lol-game-data/v1';
 
 import * as template from './layout.html';
-import Vue from '@mfro/vue-ts';
+
+import OwnedSkins from '..';
 
 @Vue.Component({ mixins: [template.mixin] })
 export default class Skin extends Vue {
@@ -9,19 +12,16 @@ export default class Skin extends Vue {
     showUnowned: boolean;
 
     @Vue.Prop
-    uikit: any;
-
-    @Vue.Prop
-    championDetails: any;
-
-    @Vue.Prop
     skin: GameData.Skin;
 
     @Vue.Prop
     champion: GameData.Champion;
 
+    uikit = OwnedSkins.provider.getRiotPlugin('rcp-fe-lol-uikit');
+    championDetails = OwnedSkins.provider.getRiotPlugin('rcp-fe-lol-champion-details');
+
     mounted() {
-        this.uikit.getTooltipManager().assign(this.$el, this.renderTooltip, {}, {
+        this.uikit.api.getTooltipManager().assign(this.$el, this.renderTooltip, {}, {
             targetAnchor: {
                 x: "center",
                 y: "top"
@@ -35,7 +35,7 @@ export default class Skin extends Vue {
     }
 
     open(champion: GameData.Champion, skin: GameData.Skin) {
-        this.championDetails.show({ championId: champion.id, skinId: skin.id });
+        this.championDetails.api.show({ championId: champion.id, skinId: skin.id });
     }
 
     renderTooltip() {
@@ -54,7 +54,7 @@ export default class Skin extends Vue {
             text = 'Not owned';
         }
 
-        let block = this.uikit.getTemplateHelper().contentBlockTooltip(this.skin.name, text, 'tooltip-system');
+        let block = this.uikit.api.getTemplateHelper().contentBlockTooltip(this.skin.name, text, 'tooltip-system');
 
         let tip = document.createElement('lol-uikit-tooltip');
         tip.className = 'skin-tooltip ' + this.skin.ownership.owned ? 'owned' : 'unowned';

@@ -1,5 +1,5 @@
 import { Provider } from 'zhonya';
-// import * as Logging from 'logging';
+// import * as Logging from 'zhonya/logging';
 
 import * as CommonLibs from 'rcp-fe-common-libs/v1';
 

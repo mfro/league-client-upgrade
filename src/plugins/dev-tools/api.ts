@@ -1,6 +1,6 @@
 import { Provider } from 'zhonya';
-import request from 'utility/request';
-import * as Logging from 'logging';
+import request from 'zhonya/util/request';
+import * as Logging from 'zhonya/logging';
 
 if (location.search == '?mfro-devtool-inject') {
     request<any[]>('http://localhost:8888/json').then(list => {

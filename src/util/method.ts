@@ -1,4 +1,4 @@
-import * as Logging from 'logging';
+import * as Logging from 'zhonya/logging';
 
 /**
  * Replace method on target object.

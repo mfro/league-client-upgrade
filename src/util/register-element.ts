@@ -1,4 +1,4 @@
-import * as method from 'utility/method';
+import * as method from 'zhonya/util/method';
 
 interface HookCallback {
     (name: string, args: any): void;

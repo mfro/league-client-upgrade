@@ -1,8 +1,8 @@
 import { Provider } from 'zhonya';
 
-import * as method from 'utility/method';
+import * as method from 'zhonya/util/method';
 
-import componentsInjector from 'plugins/components-injector';
+import componentsInjector from 'zhonya/plugins/components-injector';
 
 function open(this: any, node: any) {
     let url = `https://na.op.gg/summoner/userName=${this.member.name}`;

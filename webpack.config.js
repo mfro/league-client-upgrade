@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     name: 'electron',
-    entry: path.resolve(__dirname, 'src/index.ts'),
+    entry: path.resolve(__dirname, 'src/main.ts'),
 
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -23,7 +23,10 @@ module.exports = {
                         loader: 'babel-loader',
                         options: { presets: ['es2015'] }
                     },
-                    'ts-loader',
+                    {
+                        loader: 'ts-loader',
+                        options: { logLevel: 'warn' }
+                    }
                 ],
             },
             {
@@ -48,10 +51,7 @@ module.exports = {
         extensions: ['.js', '.ts'],
 
         alias: {
-            'zhonya': path.resolve(__dirname, 'src/main'),
-            'utility': path.resolve(__dirname, 'src/utility'),
-            'plugins': path.resolve(__dirname, 'src/plugins'),
-            'logging': path.resolve(__dirname, 'src/logging')
+            'zhonya': path.resolve(__dirname, 'src'),
         }
     },
 

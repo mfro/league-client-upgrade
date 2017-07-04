@@ -1,9 +1,9 @@
 import { Provider } from 'zhonya';
-// import * as Logging from 'logging';
+// import * as Logging from 'zhonya/logging';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 
-import l10nInjector from 'plugins/l10n-injector';
+import l10nInjector from 'zhonya/plugins/l10n-injector';
 
 import IconsTab from './icons-tab';
 import Vue from 'vue';
