@@ -51,7 +51,7 @@ export interface Provider {
     getRiotPluginApi(...keys: string[]): Promise<any[]>;
 }
 
-const provider: Provider = {
+export const provider: Provider = {
     allPlugins(): Plugin<any>[] {
         return plugins;
     },

@@ -11,7 +11,4 @@ export default class Icon extends Vue {
 
     @Vue.Prop
     icon: GameData.Icon;
-
-    @Vue.Prop
-    uikit: any;
 }

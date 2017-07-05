@@ -23,9 +23,7 @@ export default class SkinsTab extends Vue {
     @Vue.Data
     group = true;
 
-    uikit: any;
     mastery: GameData.ChampionMastery[];
-    championDetails: any;
 
     get ownedCount() {
         return this.champions && this.champions.reduce((a, b) => a + b.skins.filter(s => s.ownership.owned).length - 1, 0);

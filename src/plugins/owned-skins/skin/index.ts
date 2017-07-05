@@ -4,7 +4,7 @@ import * as GameData from 'rcp-be-lol-game-data/v1';
 
 import * as template from './layout.html';
 
-import OwnedSkins from '..';
+import * as Zhonya from 'zhonya';
 
 @Vue.Component({ mixins: [template.mixin] })
 export default class Skin extends Vue {
@@ -17,10 +17,13 @@ export default class Skin extends Vue {
     @Vue.Prop
     champion: GameData.Champion;
 
-    uikit = OwnedSkins.provider.getRiotPlugin('rcp-fe-lol-uikit');
-    championDetails = OwnedSkins.provider.getRiotPlugin('rcp-fe-lol-champion-details');
+    uikit: Zhonya.RiotPlugin;
+    championDetails: Zhonya.RiotPlugin;
 
     mounted() {
+        this.uikit = Zhonya.provider.getRiotPlugin('rcp-fe-lol-uikit');
+        this.championDetails = Zhonya.provider.getRiotPlugin('rcp-fe-lol-champion-details');
+
         this.uikit.api.getTooltipManager().assign(this.$el, this.renderTooltip, {}, {
             targetAnchor: {
                 x: "center",
@@ -39,8 +42,6 @@ export default class Skin extends Vue {
     }
 
     renderTooltip() {
-        // let locale = navigator.language;
-
         let text: string;
         if (this.skin.ownership.owned) {
             let date = new Date(this.skin.ownership.rental.purchaseDate);

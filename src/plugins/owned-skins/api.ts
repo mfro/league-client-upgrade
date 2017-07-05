@@ -23,23 +23,24 @@ function create(Ember: Ember) {
 export function setup(hook: Provider) {
     l10nInjector.api.add(l10n_key, 'SKINS');
 
-    hook.getRiotPluginApi('rcp-fe-ember-libs').then(api => {
-        return api.getEmber('2.12.0');
+    let collections: any;
+    hook.getRiotPluginApi(
+        'rcp-fe-ember-libs',
+        'rcp-fe-lol-collections',
+    ).then(([emberLibs, c]) => {
+        collections = c;
+        return emberLibs.getEmber('2.12.0');
     }).then(Ember => {
-        hook.getRiotPluginApi(
-            'rcp-fe-lol-collections',
-        ).then(collections => {
-            collections.registerSubSection({
-                name: 'skins',
-                locKey: l10n_key,
-                jmxEnabledKey: "LCUChampionGridEnabled",
-                componentFactoryName: 'SkinsRootComponent',
-                componentFactoryDef: {
-                    name: 'SkinsRootComponent',
-                    SkinsRootComponent: create(Ember)
-                },
-                priority: 150
-            })
-        });
+        collections.registerSubSection({
+            name: 'skins',
+            locKey: l10n_key,
+            jmxEnabledKey: "LCUChampionGridEnabled",
+            componentFactoryName: 'SkinsRootComponent',
+            componentFactoryDef: {
+                name: 'SkinsRootComponent',
+                SkinsRootComponent: create(Ember)
+            },
+            priority: 150
+        })
     });
 }

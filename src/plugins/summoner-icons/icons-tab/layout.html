@@ -25,7 +25,7 @@
         <!-- By wrapping our view in lol-uikit-scrollable, we automatically get LCU-style scrollbars. -->
         <lol-uikit-scrollable class="right-pane">
             <template v-for="icon in sorted">
-                <icon :key="icon.id" :icon="icon" :uikit="uikit" :owned="owned.includes(icon.id)"/>
+                <icon :key="icon.id" :icon="icon" :owned="owned.includes(icon.id)"/>
             </template>
         </lol-uikit-scrollable>
     </div>
