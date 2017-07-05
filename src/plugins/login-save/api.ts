@@ -1,30 +1,22 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'zhonya/logging';
+// import * as Logging from 'zhonya/logging';
 import * as method from 'zhonya/util/method';
 
 import Ember from 'rcp-fe-ember-libs/v1';
-import * as Login from 'rcp-be-lol-login/v1';
+import { LoginComponent } from 'rcp-fe-lol-login/v1';
 
 import emberInjector from 'zhonya/plugins/ember-injector';
-
-import style from './style.less';
 
 import Root from './root';
 import * as saved from './saved';
 
-let styleNode: HTMLStyleElement;
-
-declare type LoginComponent = Ember.Component<{
-    session: Login.Session,
-    password: string
-}>;
-
 function Mixin(Ember: Ember) {
-    let didManual = false;
+    const map = new Map<LoginComponent, { root: Root, didManual: boolean }>();
 
     return {
         zhonya_sessionObserver: Ember.observer('session.state', function (this: LoginComponent) {
             let session = this.get('session');
+            let data = map.get(this)!;
 
             if (!session) return;
 
@@ -33,7 +25,7 @@ function Mixin(Ember: Ember) {
                     break;
 
                 case 'SUCCEEDED':
-                    if (!didManual) break;
+                    if (!data.didManual) break;
 
                     saved.patch({
                         username: session.username,
@@ -42,33 +34,39 @@ function Mixin(Ember: Ember) {
                     break;
 
                 default:
-                    didManual = false;
+                    data.didManual = false;
                     break;
             }
         }),
 
-        init(this: Ember.Component<any>) {
+        init(this: LoginComponent) {
             this._super();
 
+            let root = new Root();
+            map.set(this, {
+                root,
+                didManual: false
+            });
+
             method.before(this.actions, 'login', (...args) => {
-                didManual = true;
+                map.get(this)!.didManual = true;
             });
         },
 
         didRender(this: LoginComponent) {
             this._super();
 
+            let data = map.get(this);
+            if (!data) return;
+            if (data.root.$el && data.root.$el.parentNode) return;
+
             let lower = this.$('.login-body-lower-section').get(0);
-            let parent = lower.parentElement!;
-            let node = this.$('[data-login-save-root]').get(0);
+            if (!lower || !lower.parentNode) return;
 
-            if (node) return;
+            let tmp = document.createElement('span');
+            lower.parentNode.insertBefore(tmp, lower);
 
-            node = document.createElement('span');
-            parent.insertBefore(node, lower);
-
-            let vue = new Root({ data: () => ({ styleNode }) });
-            vue.$mount(node);
+            data.root.$mount(tmp);
         }
     };
 }
@@ -78,6 +76,5 @@ export function setup(hook: Provider) {
         emberInjector.api.hook('login-component', Mixin);
     });
 
-    styleNode = style();
     saved.start();
 }

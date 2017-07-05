@@ -3,6 +3,9 @@ import Vue from '@mfro/vue-ts';
 import * as template from './layout.html';
 
 import * as saved from '../saved';
+import replaceStyle from './replace.less';
+
+let replaceStyleNode: HTMLStyleElement;
 
 @Vue.Component({ mixins: [template.mixin] })
 export default class LoginSaveRoot extends Vue {
@@ -12,12 +15,12 @@ export default class LoginSaveRoot extends Vue {
     @Vue.Data
     isVisible = false;
 
-    styleNode: HTMLStyleElement;
-
     created() {
+        replaceStyleNode || (replaceStyleNode = replaceStyle());
+
         saved.get().then(list => {
             this.saved = list.filter(a => a.password && a.display);
-            this.isVisible = !!this.styleNode.parentNode;
+            this.isVisible = !!replaceStyleNode.parentNode;
 
             if (this.isVisible && this.saved.length == 0)
                 this.hide();
@@ -25,12 +28,12 @@ export default class LoginSaveRoot extends Vue {
     }
 
     hide() {
-        this.styleNode.parentNode!.removeChild(this.styleNode);
+        replaceStyleNode.parentNode!.removeChild(replaceStyleNode);
         this.isVisible = false;
     }
 
     show() {
-        document.head.appendChild(this.styleNode);
+        document.head.appendChild(replaceStyleNode);
         this.isVisible = true;
     }
 }
