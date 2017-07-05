@@ -13,7 +13,7 @@ declare module "*.html" {
 }
 
 declare module "*.less" {
-    const x: () => void;
+    const x: (doc?: HTMLDocument) => HTMLStyleElement;
     export = x;
 }
 

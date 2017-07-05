@@ -37,9 +37,12 @@ declare module "rcp-fe-ember-libs/v1" {
         interface Component<Props> {
             $: JQueryStatic;
             element: HTMLElement;
+            
+            actions: any;
 
             get<P extends keyof Props>(path: P): Props[P];
             _super(...args: any[]): void;
+
 
             getProperties(...args: string[]): {};
             getProperties(keys: string[]): {};

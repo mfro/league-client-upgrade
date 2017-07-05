@@ -1,0 +1,19 @@
+<style src="./style.less" />
+
+<component src="../saved-login" />
+
+<div data-login-save-root class="login-save-root">
+    <template v-if="isVisible">
+        <div class="list">
+            <template v-for="account in saved">
+                <saved-login :account="account" />
+            </template>
+        </div>
+
+        <lol-uikit-flat-button key="hide" @click="hide()">Manual Login</lol-uikit-flat-button>
+    </template>
+
+    <template v-else-if="saved && saved.length > 0">
+        <lol-uikit-flat-button key="show" @click="show()">Saved Logins</lol-uikit-flat-button>
+    </template>
+</div>

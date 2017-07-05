@@ -16,9 +16,9 @@ export default function request<T>(one: string, two?: string, body?: any): Promi
             let res = req.responseText;
 
             if (req.getResponseHeader('content-type')!.indexOf('application/json') != -1)
-                res = JSON.parse(res);
+                try { res = JSON.parse(res); } catch (e) { }
 
-            if (req.status == 200)
+            if (req.status >= 200 && req.status < 300)
                 resolve(<any>res);
             else
                 reject(res);

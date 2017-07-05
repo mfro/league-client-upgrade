@@ -11,5 +11,6 @@ module.exports = function(doc) {
     const node = doc.createElement('style');
     node.innerHTML = content;
     doc.head.appendChild(node);
+    return node;
 };`
 }
