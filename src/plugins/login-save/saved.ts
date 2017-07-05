@@ -17,8 +17,12 @@ const name = 'zhonya-saved-accounts';
 let chatMe: Chat.User;
 let loginSession: Login.Session;
 
+let cached: Promise<Account[]>;
+
 export function get(): Promise<Account[]> {
-    return request<{ data: any }>('/lol-settings/v2/local/' + name).then(res => {
+    if (cached) return cached;
+
+    return cached = request<{ data: any }>('/lol-settings/v2/local/' + name).then(res => {
         return res.data ? res.data.accounts : [];
     });
 }
@@ -35,10 +39,11 @@ export function patch(account: Account) {
             }
         }
 
+        cached = Promise.resolve(list);
         return request('PATCH', '/lol-settings/v2/local/' + name, {
             data: { accounts: list },
             schemaVersion: 1
-        })
+        });
     });
 }
 
@@ -47,8 +52,15 @@ export function start() {
         Observe.api.bind('/lol-chat/v1'),
         Observe.api.bind('/lol-login/v1'),
     ]).then(([chat, login]) => {
-        chat.observe<Chat.User>('/me', v => (chatMe = v, update()));
-        login.observe<Login.Session>('/session', v => (loginSession = v, update()));
+        chat.observe<Chat.User>('/me', v => {
+            chatMe = v;
+            update();
+        });
+
+        login.observe<Login.Session>('/session', v => {
+            loginSession = v;
+            update();
+        });
     });
 }
 

@@ -20,24 +20,38 @@ declare type LoginComponent = Ember.Component<{
 }>;
 
 function Mixin(Ember: Ember) {
+    let didManual = false;
+
     return {
         zhonya_sessionObserver: Ember.observer('session.state', function (this: LoginComponent) {
             let session = this.get('session');
 
-            if (!session || session.state != 'SUCCEEDED')
-                return;
+            if (!session) return;
 
-            saved.patch({
-                username: session.username,
-                password: this.get('password'),
-            });
+            switch (session.state) {
+                case 'IN_PROGRESS':
+                    break;
+
+                case 'SUCCEEDED':
+                    if (!didManual) break;
+
+                    saved.patch({
+                        username: session.username,
+                        password: this.get('password'),
+                    });
+                    break;
+
+                default:
+                    didManual = false;
+                    break;
+            }
         }),
 
         init(this: Ember.Component<any>) {
             this._super();
 
             method.before(this.actions, 'login', (...args) => {
-                Logging.log(...args);
+                didManual = true;
             });
         },
 

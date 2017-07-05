@@ -14,8 +14,6 @@ export function replace<T, M extends keyof T>(target: T, method: M, replacement:
     const old = <Function><any>target[method];
 
     target[method] = <any>function (this: any, ...args: any[]) {
-        if (method == 'LoginRootComponent') debugger;
-
         const original = (...args: any[]) => old.apply(this, args)
 
         try {
