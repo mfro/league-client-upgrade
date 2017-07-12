@@ -1,5 +1,5 @@
 import { Provider } from 'zhonya';
-import * as Logging from 'zhonya/logging';
+// import * as Logging from 'zhonya/logging';
 
 import request from 'zhonya/util/request';
 
@@ -15,20 +15,21 @@ import Vue from 'vue';
 
 let trans: Promise<any>;
 let uikit: any;
+let tierNames: any;
 
 function addTooltip(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
     let summoner: Summoner.Summoner;
     let leagues: any[];
-    request<Summoner.Summoner>(`/lol-summoner/v2/summoners?name=${member.displayName}`).then<any[]>(data => {
-        summoner = data;
-        return request(`/lol-leagues/v2/summoner-leagues/${summoner.summonerId}`);
+    request<[Summoner.Summoner]>(`/lol-summoner/v2/summoners?name=${member.displayName}`).then<any[]>(data => {
+        summoner = data[0];
+        return request(`/lol-leagues/v1/summoner-leagues/${summoner.summonerId}`);
     }).then(data => {
         leagues = data;
         return <any>trans;
     }).then(trans => {
         let rankings = leagues.map(l => ({
             type: trans['LEAGUES_QUEUE_NAME_' + l.queueType],
-            tier: trans['LEAGUES_RANK_TIER_' + l.leagueTier],
+            tier: tierNames[l.leagueTier.toLowerCase()],
             rank: l.requesterLeagueRank
         }));
 
@@ -45,12 +46,10 @@ function addTooltip(this: ChampSelectComponent, member: ChampSelect.Cell, Ember:
         el.style.pointerEvents = 'auto';
 
         const render = () => {
-            debugger;
             tooltip.$mount();
             return tooltip.$el;
         };
 
-        Logging.log(el);
         uikit.getTooltipManager().assign(el, render, {}, {
             targetAnchor: {
                 x: "center",
@@ -89,4 +88,5 @@ export function setup(hook: Provider) {
     });
 
     hook.postInit('rcp-fe-lol-uikit', plugin => uikit = plugin.api);
+    hook.postInit('rcp-fe-lol-league-tier-names', plugin => plugin.api.getNames().then((t: any) => tierNames = t));
 }

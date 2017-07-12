@@ -5,5 +5,6 @@ declare module "rcp-fe-lol-champ-select/v1" {
     export interface ChampSelectComponent extends Ember.Component<{
         session: ChampSelect.Session;
         'session.myTeam': ChampSelect.Cell[];
+        'session.theirTeam': ChampSelect.Cell[];
     }> { }
 }

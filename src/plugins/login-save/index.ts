@@ -7,7 +7,7 @@ export default Zhonya.addPlugin({
     description: 'Adds saved logins to the league client',
 
     riotDependencies: {
-        'rcp-fe-lol-login': '0.0.419',
+        'rcp-fe-lol-login': '0.0.420',
     },
 
     dependencies: [

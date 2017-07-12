@@ -26,6 +26,7 @@ else if (location.hostname == '127.0.0.1') {
     });
 
     method.after(window, 'open', (win: Window, ...args) => {
+        if (!win) return;
         Logging.log('window.open', ...args);
         opened.push(win);
     });

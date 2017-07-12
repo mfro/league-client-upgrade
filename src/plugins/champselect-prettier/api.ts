@@ -9,11 +9,8 @@ import emberInjector from 'zhonya/plugins/ember-injector';
 
 import style from './style.less';
 
-function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: Ember) {
-    // let session = this.get('session');
-
-    const index = member.cellId % 5;
-    const node = this.$('.lines .summoner-wrapper').eq(index);
+function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, enemy: boolean, Ember: Ember) {
+    const node = this.$('.lines .summoner-wrapper.visible').eq(member.cellId);
 
     const champId = member.championId;
     const skinId = member.selectedSkinId;
@@ -23,8 +20,6 @@ function prettier(this: ChampSelectComponent, member: ChampSelect.Cell, Ember: E
     } else {
         node.css('background-image', '');
     }
-
-    // Logging.log(session, member, node);
 }
 
 function mixin(Ember: Ember) {
@@ -32,10 +27,12 @@ function mixin(Ember: Ember) {
         didRender: function (this: ChampSelectComponent) {
             this._super(...arguments);
 
-            let team = this.get('session.myTeam');
+            for (let member of this.get('session.myTeam') || []) {
+                prettier.bind(this)(member, false, Ember);
+            }
 
-            for (let member of team || []) {
-                prettier.bind(this)(member, Ember);
+            for (let member of this.get('session.theirTeam') || []) {
+                prettier.bind(this)(member, true, Ember);
             }
         }
     };

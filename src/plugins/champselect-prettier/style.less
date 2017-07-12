@@ -3,49 +3,66 @@
         z-index: 1 !important;
     }
 
-    &.selected-screen .summoner-array.your-party .lines {
+    &.is-showing-grid:not(.selected-screen) .summoner-array.your-party .lines {
+        -webkit-mask-image: radial-gradient(circle at calc(100% + 186px) calc(50% + 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
+    }
+
+    .summoner-array.your-party .lines {
         -webkit-mask-image: radial-gradient(circle at calc(100% + 246px) calc(50% - 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
     }
 
-    &:not(.selected-screen) .summoner-array.your-party .lines {
+    &.is-showing-grid:not(.selected-screen) .summoner-array.enemy-party .lines {
         -webkit-mask-image: radial-gradient(circle at calc(100% + 186px) calc(50% + 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
+    }
+
+    .summoner-array.enemy-party .lines {
+        -webkit-mask-image: radial-gradient(circle at calc(100% + 246px) calc(50% - 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
+    }
+
+    .lines {
+        top: 2px !important;
+        -webkit-filter: none !important;
+
+        .summoner-wrapper {
+            top: -4px !important;
+            background-size: 400px !important;
+            background-position: center 20% !important;
+
+            &:before {
+                z-index: 1;
+                top: -4px !important;
+            }
+
+            &:after {
+                z-index: 1;
+                bottom: -5px !important;
+            }
+        }
+    }
+    
+    .player-object-medium {
+        .summoner-container {
+            height: 62px !important;
+        }
+
+        .champion-icon-container {
+            display: none !important;
+        }
+
+        .player-details {
+            overflow: visible !important;
+            
+            -webkit-filter: drop-shadow(0 0 5px black);
+
+            .summoner-name {
+                opacity: 1 !important;
+            }
+        }
     }
 
     .your-party {
         .lines {
-            top: 2px !important;
             left: -12px !important;
-            -webkit-filter: none !important;
-
-            .summoner-wrapper {
-                top: -4px !important;
-                background-size: 400px !important;
-                background-position: center 20% !important;
-
-                &:before {
-                    z-index: 1;
-                    left: 3px !important;
-                    top: -4px !important;
-                }
-
-                &:after {
-                    z-index: 1;
-                    left: 3px !important;
-                    bottom: -5px !important;
-                }
-            }
-        }
-
-        .summoner-container {
-            height: 62px !important;
-
-            .champion-icon-container {
-                display: none !important;
-            }
-
-            .player-details {
-                overflow: visible !important;
-            }
         }
     
         .player-object-medium {
@@ -53,12 +70,20 @@
 
             .player-details {
                 margin-left: 4px !important;
-                
-                -webkit-filter: drop-shadow(0 0 5px black);
+            }
+        }
+    }
 
-                .summoner-name {
-                    opacity: 1 !important;
-                }
+    .enemy-party {
+        .lines {
+            right: -10px !important;
+        }
+    
+        .player-object-medium {
+            margin-right: -4px !important;
+
+            .player-details {
+                margin-right: 4px !important;
             }
         }
     }

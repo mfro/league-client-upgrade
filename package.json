@@ -8,8 +8,6 @@
   "devDependencies": {
     "webpack": "^3.0.0",
 
-    "http-server": "^0.10.0",
-
     "raw-loader": "^0.5.1",
 
     "ts-loader": "^2.2.2",
@@ -41,7 +39,6 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack --watch",
-    "serve": "http-server ./build -c5",
 
     "stats": "webpack --json --profile > build/stats.json"
   },
