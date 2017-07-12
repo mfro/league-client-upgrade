@@ -3,7 +3,7 @@ import * as Zhonya from 'zhonya';
 import * as api from './api';
 
 export default Zhonya.addPlugin({
-    name: 'champselect-prettier',
+    name: 'prettier-champselect',
     description: 'Tweaks champ select to look a bit better',
 
     riotDependencies: {
