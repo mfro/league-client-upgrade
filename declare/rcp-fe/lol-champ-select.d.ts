@@ -4,7 +4,13 @@ declare module "rcp-fe-lol-champ-select/v1" {
 
     export interface ChampSelectComponent extends Ember.Component<{
         session: ChampSelect.Session;
+        summoners: Summoner[];
+        currentSummoner: ChampSelect.Cell;
         'session.myTeam': ChampSelect.Cell[];
         'session.theirTeam': ChampSelect.Cell[];
+    }> { }
+
+    export interface Summoner extends ChampSelect.Cell, Ember.Component<{
+        summonerIndex: number;
     }> { }
 }

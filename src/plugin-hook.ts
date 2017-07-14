@@ -4,7 +4,9 @@ import * as Logging from 'zhonya/logging';
 import * as method from 'zhonya/util/method';
 import request from 'zhonya/util/request';
 
-export const isDisabled = localStorage.getItem('ace-disable') == 'true';
+export const isDisabled =
+    localStorage.getItem('ace-disable') == 'true' ||
+    location.hostname != '127.0.0.1';
 
 interface RegistrationHandler {
     (handler: (provider: PluginRunner.Provider) => Promise<any>): void

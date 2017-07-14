@@ -1,18 +1,16 @@
 import * as Zhonya from 'zhonya';
-import * as Logging from './logging';
+import * as Logging from 'zhonya/logging';
 
 import * as method from 'zhonya/util/method';
-
-declare const require: any;
+import * as plugins from 'zhonya/plugins';
 
 Logging.log(`injected into ${location.href} (${location.hostname})`);
 
 if (Zhonya.isDisabled)
     Logging.log('disabling...');
 
-else if (location.hostname == '127.0.0.1') {
-    const context = require.context('./plugins', true, /\.\/[^\/]+\/index\.ts$/i);
-    context.keys().forEach(context);
+else {
+    plugins.load();
 
     Zhonya.start();
 

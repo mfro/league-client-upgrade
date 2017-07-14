@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const exec = require('child_process').exec;
 
 const webpack = require('webpack');
-const config = require('./webpack.config');
+const getConfig = require('./webpack.config');
 
 const dst = path.join(__dirname, './releases/');
 
@@ -31,15 +31,16 @@ function check() {
 }
 
 function create() {
-    copy();
-    // webpack(config, (err, stats) => {
-    //     if (err) return console.error(err);
-    //     if (stats.hasErrors()) {
-    //         return console.error(stats.toString({ colors: true }));
-    //     }
+    let config = getConfig('prod');
 
-    //     copy();
-    // });
+    webpack(config, (err, stats) => {
+        if (err) return console.error(err);
+        if (stats.hasErrors()) {
+            return console.error(stats.toString({ colors: true }));
+        }
+
+        copy();
+    });
 }
 
 function copy() {

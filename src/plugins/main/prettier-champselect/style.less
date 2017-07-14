@@ -1,0 +1,99 @@
+.champion-select {
+    .champion-splash-ring.selected-screen {
+        z-index: 1 !important;
+    }
+
+    // The radial-gradients that Riot made are sumer inaccurate, doesnt matter much for only the lines but they need to be fixed
+    // The entire enemy team is flipped so the gradient is the same
+    &.is-showing-grid:not(.selected-screen) .summoner-array .lines {
+        -webkit-mask-image: radial-gradient(circle at calc(100% + 186px) calc(50% + 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
+    }
+
+    .summoner-array .lines {
+        -webkit-mask-image: radial-gradient(circle at calc(100% + 246px) calc(50% - 2.5px), transparent 0, transparent 318px, #000 318px, #000 100%) !important;
+    }
+
+    .lines {
+        // The lines arent lined up for some reason...
+        top: 2px !important;
+        -webkit-filter: none !important;
+
+        .summoner-wrapper {
+            // Adjust position to make everything line up
+            top: -4px !important;
+            background-size: 400px !important;
+            background-position: center 20% !important;
+
+            // Make sure the lines are above the portraits and in the right place
+            &:before {
+                z-index: 1;
+                top: -4px !important;
+            }
+
+            &:after {
+                z-index: 1;
+                bottom: -5px !important;
+            }
+        }
+    }
+    
+    .player-object-medium {
+        .summoner-container {
+            // When the icon is removed the height is broken
+            height: 62px !important;
+        }
+
+        .champion-icon-container {
+            // Remove the champion icon, but keep it visisble so the trade thing is in the right place
+            width: 0;
+            overflow: hidden;
+        }
+
+        .player-details {
+            overflow: visible;
+            -webkit-filter: drop-shadow(0 0 5px black);
+
+            .summoner-name {
+                opacity: 1 !important;
+            }
+        }
+    }
+
+    .your-party {
+        .lines {
+            left: -12px !important;
+        }
+    
+        .player-object-medium {
+            margin-left: -4px !important;
+
+            .player-details {
+                margin-left: 4px !important;
+            }
+        }
+    }
+
+    .enemy-party {
+        .lines {
+            right: -10px !important;
+
+            // Because the entire enemy team is flipped we need to flip it back for the champions
+            .summoner-wrapper {
+                transform: scaleX(-1);
+
+                &::before, &::after {
+                    transform: scaleX(-1);
+                    left: 10px !important;
+                }
+            }
+        }
+    
+        .player-object-medium {
+            margin-right: -4px !important;
+
+            .player-details {
+                margin-right: 4px !important;
+            }
+        }
+    }
+}

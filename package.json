@@ -2,7 +2,7 @@
   "name": "zhonya",
   "description": "Modifications for the league client update",
   "author": "mfro",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": true,
 
   "devDependencies": {
@@ -37,7 +37,6 @@
   },
 
   "scripts": {
-    "build": "webpack -p",
     "watch": "webpack --watch",
 
     "stats": "webpack --json --profile > build/stats.json"
