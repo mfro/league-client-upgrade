@@ -10,8 +10,8 @@ function open(this: any, node: any) {
     window.open(url);
 }
 
-function getContextMenu(this: any, original: Function, ...args: any[]) {
-    var value = original(...args);
+function getContextMenu(this: any, original: Function) {
+    var value = original(...arguments);
 
     value.splice(3, 0, {
         action: open,
@@ -24,7 +24,7 @@ function getContextMenu(this: any, original: Function, ...args: any[]) {
 }
 
 export function setup(hook: Provider) {
-    componentsInjector.api.hook('lol-social-roster-member', type => {
-        method.replace(type.prototype, 'getContextMenu', getContextMenu);
+    componentsInjector.api.hookPrototype('lol-social-roster-member', ctor => {
+        method.replace(ctor.prototype, 'getContextMenu', getContextMenu);
     });
 }

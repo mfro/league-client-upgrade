@@ -1,0 +1,64 @@
+._mfro_has-ace {
+    .availability-icon {
+        background-color: #010912 !important;
+        border: none;
+
+        .color(@color) {
+            &:after, &:before {
+                background: @color;
+                box-shadow: 0 0 2px @color;
+            }
+        }
+
+        &.chat, &.available, &.online {
+            .color(#66f8a0);
+        }
+
+        &.dnd, &.spectating {
+            .color(#0ac5e1);
+        }
+
+        &.away {
+            .color(#9c3213);
+        }
+
+        &.offline {
+            .color(#9c988a);
+        }
+
+        &:after, &:before {
+            content: ' ';
+            display: block;
+            position: relative;
+        }
+
+        &:before {
+            left: 3px;
+            width: 2px;
+            height: 8px;
+        }
+
+        &:after {
+            top: -5px;
+            left: 0;
+            width: 8px;
+            height: 2px;
+        }
+    }
+}
+
+._mfro_ace-indicator {
+    width: 12px;
+    height: 12px;
+
+    position: absolute;
+    bottom: 9px;
+    left: 10px;
+
+    > div {
+        background-image: url(/fe/app-controls/control-close.png);
+        background-size: 12px;
+        background-position: center;
+        transform: rotate(45deg);
+    }
+}

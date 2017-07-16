@@ -41,6 +41,8 @@ declare module 'rcp-be-lol-chat/v1' {
             skinVariant: string;
             skinname: string;
             tier: string;
+
+            aceData?: string;
         },
         name: string;
         statusMessage: string | null;

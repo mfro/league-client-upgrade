@@ -22,7 +22,7 @@ function start() {
 function check() {
     fs.exists(path.join(dst, version), exists => {
         if (exists) {
-            console.error(`Version ${version} already created`);
+            console.error(`Version ${version} already exists`);
             return;
         }
 

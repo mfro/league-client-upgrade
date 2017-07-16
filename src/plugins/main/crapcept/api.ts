@@ -11,6 +11,7 @@ let matchmaking: CommonLibs.Binding;
 
 function onReadyCheck(check: Matchmaking.ReadyCheck) {
     if (!check || check.playerResponse != 'None') return;
+    if (check.state == 'Error') return;
 
     matchmaking.post('/ready-check/accept');
     Logging.log('accept ready-check', check);
