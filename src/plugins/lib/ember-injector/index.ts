@@ -7,7 +7,7 @@ export default Zhonya.addPlugin({
     description: 'Utility plugin for modifying ember components on the league client',
 
     riotDependencies: {
-        'rcp-fe-ember-libs': '0.0.73',
+        'rcp-fe-ember-libs': '0.0.74',
     },
 
     api: api
