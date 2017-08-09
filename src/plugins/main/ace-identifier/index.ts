@@ -8,7 +8,7 @@ export default Zhonya.addPlugin({
 
     riotDependencies: {
         'rcp-be-lol-chat': '1.x',
-        'rcp-fe-lol-social': '1.1.86'
+        'rcp-fe-lol-social': '1.1.111'
     },
     
     dependencies: [

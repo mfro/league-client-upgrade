@@ -26,7 +26,7 @@ export default class SkinsTab extends Vue {
     mastery: GameData.ChampionMastery[];
 
     get ownedCount() {
-        return this.champions && this.champions.reduce((a, b) => a + b.skins.filter(s => s.ownership.owned).length - 1, 0);
+        return this.sorted && this.sorted.reduce((a, b) => a + b.skins.filter(s => s.ownership.owned).length - 1, 0);
     }
 
     get totalCount() {
@@ -40,7 +40,7 @@ export default class SkinsTab extends Vue {
             if (champ.id < 0)
                 return false;
 
-            if (!this.showUnowned && champ.skins.filter(s => s.ownership.owned).length == 1)
+            if (!this.showUnowned && (!(<any>champ).ownership.owned || champ.skins.filter(s => s.ownership.owned).length == 1))
                 return false;
 
             return true;

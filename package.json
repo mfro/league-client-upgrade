@@ -2,7 +2,7 @@
     "name": "zhonya",
     "description": "Modifications for the league client update",
     "author": "mfro",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "private": true,
     "devDependencies": {
         "webpack": "^3.0.0",

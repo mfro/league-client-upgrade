@@ -7,8 +7,8 @@ export default Zhonya.addPlugin({
     description: 'Utility plugin for adding strings to the league client for custom UI components',
 
     riotDependencies: {
-        'rcp-fe-l10n': '0.0.589',
-        'rcp-fe-lol-l10n': '0.0.592',
+        'rcp-fe-l10n': '0.0.590',
+        'rcp-fe-lol-l10n': '0.0.595',
     },
 
     api: api

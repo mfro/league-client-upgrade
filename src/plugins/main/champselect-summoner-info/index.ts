@@ -7,7 +7,7 @@ export default Zhonya.addPlugin({
     description: 'Displays summoner ranked stats and other info for team mates in champ select',
 
     riotDependencies: {
-        'rcp-fe-lol-champ-select': '1.0.961',
+        'rcp-fe-lol-champ-select': '1.0.969',
         'rcp-fe-lol-league-tier-names': '0.0.31',
         'rcp-fe-lol-uikit': '0.x',
 
