@@ -4,6 +4,7 @@ import * as semver from 'semver';
 import * as Logging from 'zhonya/logging';
 
 import * as riot from './plugin-hook';
+import Raven from 'raven-js';
 
 export const isDisabled = riot.isDisabled;
 
@@ -141,6 +142,7 @@ export class Plugin<T extends PluginAPI> {
             this.state = PluginState.ENABLED;
             return true;
         } catch (x) {
+            Raven.captureException(x, { level: 'warning' });
             Logging.error(`${this.definition.name}: Setup failed, disabling...`, x);
             this.state = PluginState.DISABLED;
             return false;
@@ -163,7 +165,7 @@ export function start() {
             };
 
             riotPlugins.push(plugin);
-            
+
             riot.hook(item.fullName, 'postInit', (name, api, provider) => {
                 plugin.api = api;
                 plugin.provider = provider;

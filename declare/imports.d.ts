@@ -8,3 +8,8 @@ declare module "*.less" {
     const x: (doc?: HTMLDocument) => HTMLStyleElement;
     export = x;
 }
+
+declare module "*.json" {
+    const x: any;
+    export = x;
+}

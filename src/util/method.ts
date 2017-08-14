@@ -1,3 +1,4 @@
+import Raven from 'raven-js';
 import * as Logging from 'zhonya/logging';
 
 /**
@@ -18,8 +19,9 @@ export function replace<T, M extends keyof T>(target: T, method: M, replacement:
 
         try {
             return replacement.call(this, original, ...args);
-        } catch (e) {
-            Logging.error(`Wrapper failed for ${method}.`, ...args, e);
+        } catch (x) {
+            Raven.captureException(x, { level: 'warning' });
+            Logging.error(`Wrapper failed for ${method}.`, ...args, x);
             return original(...args);
         }
     };

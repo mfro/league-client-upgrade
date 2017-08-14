@@ -1,3 +1,5 @@
+import Raven from 'raven-js';
+
 import * as Logging from 'zhonya/logging';
 
 declare function require(path: string): any;
@@ -16,8 +18,20 @@ export function load() {
     for (let key of context.keys()) {
         try {
             context(key);
-        } catch (e) {
-            Logging.error("Errror while loading: " + key, e);
+        } catch (x) {
+            Raven.captureException(x, { level: 'warning' });
+            Logging.error("Error while loading: " + key, x);
+        }
+    }
+
+    const test = require.context('./test-live', true, /\.\/[^\/]+\/index\.ts$/i);
+
+    for (let key of test.keys()) {
+        try {
+            test(key);
+        } catch (x) {
+            Raven.captureException(x, { level: 'warning' });
+            Logging.error("Error while loading: " + key, x);
         }
     }
 }
