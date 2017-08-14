@@ -4,6 +4,8 @@ import { Provider } from 'zhonya';
 
 import request from 'zhonya/util/request';
 
+import central from 'zhonya/plugins/test-live/central';
+
 export function setup(hook: Provider) {
     Promise.all([
         '/system/v1/builds',
@@ -21,7 +23,7 @@ export function setup(hook: Provider) {
             `GPU: ${args[4].GPUName}`,
         ];
 
-        Raven.setUserContext({
+        central.api.patchUser({
             id: args[1]
         });
 

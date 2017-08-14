@@ -8,6 +8,7 @@ export default Zhonya.addPlugin({
 
     dependencies: [
         'observe',
+        'test-central',
     ],
 
     api: api
