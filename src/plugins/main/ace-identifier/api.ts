@@ -1,5 +1,5 @@
 import { Provider } from 'zhonya';
-// import * as Logging from 'zhonya/logging';
+import * as Logging from 'zhonya/logging';
 
 import componentsInjector from 'zhonya/plugins/lib/components-injector';
 
@@ -33,11 +33,12 @@ export function setup(hook: Provider) {
 
 function hookRosterMember(mixins: any[]) {
     return {
-        created(this: HTMLElement & { watch: Function, member: any }) {
-            this.watch('member', (member: any) => {
-                let aceData = member && member.lol && member.lol.aceData;
+        created(this: HTMLElement & { onSync: Function, watch: Function, member: any }) {
+            this.watch('member.lol.aceData', (aceData: any) => {
+                if (!this.member) return;
+                Logging.log('aceData', this.member.name, aceData);
 
-                this.classList.toggle('_mfro_has-ace', aceData == 'v1');;
+                this.classList.toggle('_mfro_has-ace', aceData == 'v1');
             });
         },
     };
