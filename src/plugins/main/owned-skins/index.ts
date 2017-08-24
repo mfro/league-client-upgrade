@@ -14,6 +14,7 @@ export default Zhonya.addPlugin({
         'rcp-fe-lol-champion-details': '0.x',
 
         'rcp-be-lol-collections': '1.x',
+        'rcp-be-lol-champions': '1.x',
         'rcp-be-lol-login': '1.x'
     },
 

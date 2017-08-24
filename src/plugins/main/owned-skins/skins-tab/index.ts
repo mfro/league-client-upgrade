@@ -67,7 +67,7 @@ export default class SkinsTab extends Vue {
 
             // Step 2: Fetch owned champions and skins, as well as mastery score.
             return Promise.all([
-                request(`/lol-collections/v1/inventories/${summonerId}/champions`),
+                request(`/lol-champions/v1/inventories/${summonerId}/champions`),
                 request(`/lol-collections/v1/inventories/${summonerId}/champion-mastery`)
             ]);
         }).then(([champs, championMasteryData]) => {
