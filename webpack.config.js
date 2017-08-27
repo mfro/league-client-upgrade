@@ -53,7 +53,7 @@ module.exports = function (env) {
             extensions: ['.js', '.ts'],
 
             alias: {
-                'zhonya': path.resolve(__dirname, 'src'),
+                '@': path.resolve(__dirname, 'src'),
             }
         },
 

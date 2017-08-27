@@ -1,5 +1,5 @@
-import { Provider } from 'zhonya';
-import * as Logging from 'zhonya/logging';
+import { Provider } from '@';
+import * as Logging from '@/logging';
 
 import Vue from 'vue';
 

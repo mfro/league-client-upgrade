@@ -18,8 +18,8 @@
         "baseUrl": ".",
         
         "paths": {
-            "zhonya": ["src"],
-            "zhonya/*": ["src/*"]
+            "@": ["src"],
+            "@/*": ["src/*"]
         }
     },
     

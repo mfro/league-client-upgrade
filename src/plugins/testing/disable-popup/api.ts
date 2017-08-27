@@ -1,7 +1,7 @@
-import { Provider } from 'zhonya';
-// import * as Logging from 'zhonya/logging';
+import { Provider } from '@';
+// import * as Logging from '@/logging';
 
-import * as method from 'zhonya/util/method';
+import * as method from '@/util/method';
 
 export function setup(hook: Provider) {
     let desc = Object.getOwnPropertyDescriptor(window, 'riotInvoke');

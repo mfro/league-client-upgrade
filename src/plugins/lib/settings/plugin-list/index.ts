@@ -1,4 +1,4 @@
-import { Plugin, PluginState } from 'zhonya';
+import { Plugin, PluginState } from '@';
 
 import Vue from 'vue';
 

@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'prettier-champselect',
     description: 'Tweaks champ select to look a bit better',
 

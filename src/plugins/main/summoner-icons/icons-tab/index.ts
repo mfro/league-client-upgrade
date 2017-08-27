@@ -1,8 +1,8 @@
 import Vue from '@mfro/vue-ts';
 
-// import * as Logging from 'zhonya/logging';
+// import * as Logging from '@/logging';
 
-import request from 'zhonya/util/request';
+import request from '@/util/request';
 
 import * as Login from 'rcp-be-lol-login/v1';
 import * as GameData from 'rcp-be-lol-game-data/v1';

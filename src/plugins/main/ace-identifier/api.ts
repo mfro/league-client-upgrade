@@ -1,9 +1,9 @@
-import { Provider } from 'zhonya';
-import * as Logging from 'zhonya/logging';
+import { Provider } from '@';
+import * as Logging from '@/logging';
 
-import componentsInjector from 'zhonya/plugins/lib/components-injector';
+import componentsInjector from '@/plugins/lib/components-injector';
 
-import Observe from 'zhonya/plugins/lib/observe';
+import Observe from '@/plugins/lib/observe';
 import * as CommonLibs from 'rcp-fe-common-libs/v1';
 import * as Chat from 'rcp-be-lol-chat/v1';
 

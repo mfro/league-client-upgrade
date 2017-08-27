@@ -1,5 +1,5 @@
 import Vue from '@mfro/vue-ts';
-import request from 'zhonya/util/request';
+import request from '@/util/request';
 
 import * as template from './layout.html';
 

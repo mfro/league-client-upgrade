@@ -1,16 +1,8 @@
-import * as Zhonya from 'zhonya';
-import * as Logging from 'zhonya/logging';
+import * as Zhonya from '@';
+import * as Logging from '@/logging';
 
-import * as method from 'zhonya/util/method';
-import * as plugins from 'zhonya/plugins';
-
-import * as pack from 'zhonya/../package.json';
-import Raven from 'raven-js';
-
-Raven.config('https://ad73264cff4b4f698be52bbe552c5170@sentry.io/184631');
-Raven.install();
-
-Raven.setRelease(pack.version);
+import * as method from '@/util/method';
+import * as plugins from '@/plugins';
 
 Logging.log(`injected into ${location.href} (${location.hostname})`);
 

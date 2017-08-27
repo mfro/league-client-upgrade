@@ -4,7 +4,7 @@ import * as GameData from 'rcp-be-lol-game-data/v1';
 
 import * as template from './layout.html';
 
-import * as Zhonya from 'zhonya';
+import * as Zhonya from '@';
 
 @Vue.Component({ mixins: [template.mixin] })
 export default class Skin extends Vue {

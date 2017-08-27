@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'ace-identifier',
     description: 'Identifies other users of ACE',
 

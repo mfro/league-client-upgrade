@@ -1,11 +1,11 @@
-import { Provider } from 'zhonya';
-// import * as Logging from 'zhonya/logging';
-import * as method from 'zhonya/util/method';
+import { Provider } from '@';
+// import * as Logging from '@/logging';
+import * as method from '@/util/method';
 
 import Ember from 'rcp-fe-ember-libs/v1';
 import { LoginComponent } from 'rcp-fe-lol-login/v1';
 
-import emberInjector from 'zhonya/plugins/lib/ember-injector';
+import emberInjector from '@/plugins/lib/ember-injector';
 
 import Root from './root';
 import * as saved from './saved';

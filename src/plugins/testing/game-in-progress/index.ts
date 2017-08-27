@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'game-in-progress',
     description: 'Display stats for all members of a game, replacing the default "Game is still in progress..." screen',
 

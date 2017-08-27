@@ -1,5 +1,5 @@
 function invoke(func: Function, color: string, ...args: any[]) {
-    func.call(console, '%czhonya', 'color: ' + color, ...args);
+    func.call(console, '%cmfro', 'color: ' + color, ...args);
 }
 
 /**

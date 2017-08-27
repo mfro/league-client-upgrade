@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'op.gg-embed',
     description: 'Adds op.gg links to parts of the client',
 

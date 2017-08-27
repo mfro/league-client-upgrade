@@ -1,5 +1,5 @@
-import observe from 'zhonya/plugins/lib/observe';
-import * as Logging from 'zhonya/logging';
+import observe from '@/plugins/lib/observe';
+import * as Logging from '@/logging';
 
 import { Summoner } from 'rcp-be-lol-summoner/v1';
 // import * as Common from 'rcp-fe-common-libs/v1';

@@ -1,8 +1,8 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
-import * as Logging from 'zhonya/logging';
+import * as Logging from '@/logging';
 
-import * as method from 'zhonya/util/method';
-import request from 'zhonya/util/request';
+import * as method from '@/util/method';
+import request from '@/util/request';
 
 export const isDisabled =
     localStorage.getItem('ace-disable') == 'true' ||

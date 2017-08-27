@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'ultimate-bravery',
     description: 'Adds Ultimate Bravery to the client',
 

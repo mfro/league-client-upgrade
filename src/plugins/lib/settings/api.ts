@@ -1,8 +1,8 @@
-import { Provider } from 'zhonya';
+import { Provider } from '@';
 
-import Backlog from 'zhonya/util/backlog';
+import Backlog from '@/util/backlog';
 
-// import l10nInjector from 'zhonya/plugins/l10n-injector';
+// import l10nInjector from '@/plugins/l10n-injector';
 
 // import Vue from 'vue';
 

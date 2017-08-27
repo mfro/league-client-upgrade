@@ -1,8 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'champselect-summoner-info',
     description: 'Displays summoner ranked stats and other info for team mates in champ select',
 

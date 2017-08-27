@@ -1,10 +1,9 @@
 import * as PluginRunner from 'rcp-fe-plugin-runner/v1';
 import * as semver from 'semver';
 
-import * as Logging from 'zhonya/logging';
+import * as Logging from '@/logging';
 
 import * as riot from './plugin-hook';
-import Raven from 'raven-js';
 
 export const isDisabled = riot.isDisabled;
 
@@ -142,7 +141,6 @@ export class Plugin<T extends PluginAPI> {
             this.state = PluginState.ENABLED;
             return true;
         } catch (x) {
-            Raven.captureException(x, { level: 'warning' });
             Logging.error(`${this.definition.name}: Setup failed, disabling...`, x);
             this.state = PluginState.DISABLED;
             return false;
@@ -173,7 +171,7 @@ export function start() {
             });
         }
 
-        // Setup all the zhonya plugins
+        // Setup all of our plugins
         for (let plugin of plugins) {
             plugin.setup();
         }

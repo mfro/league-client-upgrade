@@ -1,9 +1,9 @@
-import request from 'zhonya/util/request';
+import request from '@/util/request';
 
 import * as Login from 'rcp-be-lol-login/v1';
 import * as Chat from 'rcp-be-lol-chat/v1';
 
-import Observe from 'zhonya/plugins/lib/observe';
+import Observe from '@/plugins/lib/observe';
 
 export interface Account {
     display?: string;

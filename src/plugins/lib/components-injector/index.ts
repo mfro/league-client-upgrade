@@ -1,12 +1,8 @@
-import * as Zhonya from 'zhonya';
+import { addPlugin } from '@';
 
 import * as api from './api';
 
-export interface API {
-    hook(name: string, callback: (type: any) => any): void;
-}
-
-export default Zhonya.addPlugin({
+export default addPlugin({
     name: 'components-injector',
     description: 'Utility plugin for modifying web components on the league client',
 
