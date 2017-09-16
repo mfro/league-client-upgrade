@@ -7,6 +7,8 @@ import componentsInjector from '@/plugins/lib/components-injector';
 function open(this: any, node: any) {
     let url = `https://na.op.gg/summoner/userName=${this.member.name}`;
 
+    console.debug(url);
+
     window.open(url);
 }
 
