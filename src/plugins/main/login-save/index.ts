@@ -7,7 +7,7 @@ export default addPlugin({
     description: 'Adds saved logins to the league client',
 
     riotDependencies: {
-        'rcp-fe-lol-login': '0.0.442',
+        'rcp-fe-lol-login': '0.0.463',
     },
 
     dependencies: [

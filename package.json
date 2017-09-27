@@ -2,7 +2,7 @@
     "name": "league-client-upgrade",
     "description": "Modifications for the league client update",
     "author": "mfro",
-    "version": "1.7.5",
+    "version": "1.7.6",
     "private": true,
     "devDependencies": {
         "webpack": "^3.0.0",
