@@ -19,35 +19,58 @@ interface PluginAPI {
 }
 
 export enum PluginState {
+    /** The plugin has been declared but not initialized */
     UNINITIALIZED,
+    /** The plugin has been initialized */
     ENABLED,
+    /** The plugin is disabled, either manually or by dependency failure  */
     DISABLED
 }
 
 export interface PluginDefinition {
+    /** The name of the plugin - used for dependencies and logs */
     name: string;
+    /** Optionally disable a plugin, is completely ignored and all dependents are disabled too */
     disabled?: boolean;
+    /** Description of the purpose of a plugin */
     description: string;
+    /** Other plugins that this plugins depends on.
+     *  This plugin will load only once every plugin in this list is enabled */
     dependencies?: string[];
+    /** Riot plugins that this plugin depends on. 
+     *  This plugin will only load if all of these dependencies are satisfied.
+     *  Uses semver. */
     riotDependencies?: { [name: string]: string };
 }
 
 export interface RiotPlugin {
+    /** The API exposed by the riot plugin. Is null before initialization */
     api: any;
+    /** The provider instance used to initialize this plugin. */
     provider: PluginRunner.Provider | null;
+    /** True if the plugin has been loaded and its API acquired */
     isInitialized: boolean;
 
+    /** The definition of the plugin from the plugin-manager riot API */
     definition: PluginRunner.PluginDefinition;
 }
 
 export interface Provider {
+    /** Get a list of all plugins */
     allPlugins(): Plugin<any>[];
+    /** Get a riot plugin by full name */
     getRiotPlugin(key: string): RiotPlugin;
 
+    /** Add a pre-init hook for a riot plugin by full name */
     preInit(key: string, callback: RiotPluginCallback): void;
+    /** Add a post-init hook for a riot plugin by full name */
     postInit(key: string, callback: RiotPluginCallback): void;
 
+    /** Gets the API for a riot plugin.
+     *  If it is not available yet, the promise does not resolve until it is */
     getRiotPluginApi(key: string): Promise<any>;
+    /** Gets the API for a riot plugin.
+     *  If it is not available yet, the promise does not resolve until it is */
     getRiotPluginApi(...keys: string[]): Promise<any[]>;
 }
 
@@ -84,9 +107,13 @@ export const provider: Provider = {
 };
 
 export class Plugin<T extends PluginAPI> {
+    /** The API for this plugin. */
     api: T;
+    /** The current state of this plugin  */
     state: PluginState;
+    /** The provider for this plugin */
     provider: Provider;
+    /** The definition used to crreate this plugin */
     definition: PluginDefinition;
 
     constructor(dec: PluginDefinition & { api: T }) {
@@ -102,6 +129,12 @@ export class Plugin<T extends PluginAPI> {
         return false;
     }
 
+    /** Initialize this plugin.
+     *  If it is already intialized, this method does nothing and returns true.
+     *  If it is disabled, this method does nothing and returns false
+     *  Otherwise, it initializes all of this plugin's dependencies,
+     *  then this plugin and returns true 
+     *  @return true if setup succeeded */
     setup() {
         // If the plugin has already been setup, return true
         if (this.state == PluginState.ENABLED)
@@ -199,6 +232,10 @@ export function addPlugin<T extends PluginAPI>(definition: PluginDefinition & { 
     return plugin;
 }
 
+/**
+ * Gets a plugin by name
+ * @param key The name of the plugin
+ */
 function getPlugin<T extends PluginAPI>(key: string) {
     let plugin = plugins.find(p => p.definition.name == key);
     if (!plugin) throw new Error('Plugin not found: ' + key);

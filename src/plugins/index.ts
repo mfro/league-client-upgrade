@@ -10,6 +10,7 @@ declare namespace require {
     }
 }
 
+/** Loads all plugin modules through webpack */
 export function load() {
     const context = require.context('./main', true, /\.\/[^\/]+\/index\.ts$/i);
 

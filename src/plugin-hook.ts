@@ -121,8 +121,9 @@ function hookDocument(name: string, document: HTMLDocument) {
 
         let oldWithAffinity = event.registrationHandler.withAffinity!;
 
-        // 2: Replace the registration handler and withAffinity methods
+        // 2: Replace the registration handler
         event.registrationHandler = init => {
+            // For the old registrationHandler API, we can shim it into the withAffinity API
             event.registrationHandler.withAffinity!({
                 init,
                 destroy: dummyFunction,
@@ -130,6 +131,7 @@ function hookDocument(name: string, document: HTMLDocument) {
             });
         };
 
+        // 2.5: Also replace withAffinity handler. Slightly different API accomplishes the same thing (AFAIK)
         event.registrationHandler.withAffinity = api => {
             let plugin = {
                 name: name,
@@ -138,18 +140,22 @@ function hookDocument(name: string, document: HTMLDocument) {
                 resolve: oldWithAffinity
             };
 
-            // 4: Either delay or load the plugin
+            // 4. Once we get the API, we either load it or add it to the queue
             if (pending)
                 pending.push(plugin);
             else
                 loadPlugin(plugin);
         };
 
-        // 3: Call the original dispatchEvent method
+        // 3: Call the original dispatchEvent method, passing along our modified event
         original(event);
     });
 }
 
+/**
+ * Hooks and wraps a plugin import link
+ * @param node The <link rel="import" /> to hook 
+ */
 function hookImport(node: HTMLElement) {
     if (!(node instanceof HTMLLinkElement))
         return;
