@@ -7,7 +7,7 @@ export default addPlugin({
     description: 'Adds zhonya settings to the league client settings page',
     
     riotDependencies: {
-        'rcp-fe-lol-settings': '0.0.182'
+        'rcp-fe-lol-settings': '0.0.183'
     },
 
     api: api
