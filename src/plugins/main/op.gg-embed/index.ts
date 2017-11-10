@@ -7,7 +7,7 @@ export default addPlugin({
     description: 'Adds op.gg links to parts of the client',
 
     riotDependencies: {
-        'rcp-fe-lol-social': '1.1.171',
+        'rcp-fe-lol-social': '1.1.177',
     },
 
     dependencies: [
