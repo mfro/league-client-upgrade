@@ -7,8 +7,8 @@ export default addPlugin({
     description: 'Utility plugin for adding strings to the league client for custom UI components',
 
     riotDependencies: {
-        'rcp-fe-l10n': '0.0.611',
-        'rcp-fe-lol-l10n': '0.0.620',
+        'rcp-fe-l10n': '0.0.623',
+        'rcp-fe-lol-l10n': '0.0.633',
     },
 
     api: api
