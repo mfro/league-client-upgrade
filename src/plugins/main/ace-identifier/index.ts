@@ -8,7 +8,7 @@ export default addPlugin({
 
     riotDependencies: {
         'rcp-be-lol-chat': '1.x',
-        'rcp-fe-lol-social': '1.3.0'
+        'rcp-fe-lol-social': '1.3.22'
     },
     
     dependencies: [

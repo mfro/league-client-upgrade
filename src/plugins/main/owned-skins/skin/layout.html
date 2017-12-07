@@ -1,6 +1,0 @@
-<style src="./style.less" />
-
-<div class="skin" v-if="skin.ownership.owned || showUnowned"
-    :class="{ owned: skin.ownership.owned, unowned: !skin.ownership.owned }"
-    :style="{ backgroundImage: `url(${skin.splashPath})` }"
-    @click="open(champion, skin)" />
